@@ -167,6 +167,16 @@ func (c *Client) Delete(endpoint string) (APIWrapper, error) {
 	return wrapper, err
 }
 
+// Put makes a PUT request to the API
+func (c *Client) Put(endpoint string, resource interface{}) (APIWrapper, error) {
+	var err error
+
+	wrapper := NewAPIWrapper("put", endpoint, resource)
+	err = c.do(&wrapper)
+
+	return wrapper, err
+}
+
 // authenticate makes a call to get the access token
 func (c *Client) authenticate() error {
 	var err error
