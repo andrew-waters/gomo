@@ -16,6 +16,8 @@ const (
 	DefaultAPIVersion = "v2"
 	// DefaulEndpoint means less config from the user
 	DefaulEndpoint = "https://api.moltin.com"
+	// DefaultUserAgent is sent as a header in the API call
+	DefaultUserAgent = "go-client"
 )
 
 // Client is the main client struct
@@ -81,6 +83,7 @@ func (c Client) buildRequest(method string, endpoint string, body []byte) (*http
 
 	req.Header.Add("Authorization", c.AccessToken)
 	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("User-Agent", DefaultUserAgent)
 
 	return req, nil
 }
