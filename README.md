@@ -1,7 +1,8 @@
-# Moltin Go Client
+# gomo - a Moltin Go Client
 
 A Golang client for the [moltin](https://moltin.com) API.
 
+`go get github.com/andrew-waters/gomo`
 
 ## Instantiating a Client
 
