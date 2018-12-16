@@ -4,7 +4,8 @@ const (
 	brandType      = "brand"
 	categoryType   = "category"
 	collectionType = "collection"
-	productType    = "product"
-	fileType       = "file"
 	currencyType   = "currency"
+	fileType       = "file"
+	productType    = "product"
+	settingsType   = "settings"
 )

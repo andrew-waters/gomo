@@ -22,6 +22,6 @@ type BrandIncludes struct {
 }
 
 // SetType sets the resource type on the struct
-func (c *Brand) SetType() {
-	c.Type = brandType
+func (b *Brand) SetType() {
+	b.Type = brandType
 }
