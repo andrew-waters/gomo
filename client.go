@@ -157,6 +157,16 @@ func (c *Client) Get(endpoint string, resource ...interface{}) (APIWrapper, erro
 	return wrapper, err
 }
 
+// Delete makes a DELETE request to the API
+func (c *Client) Delete(endpoint string) (APIWrapper, error) {
+	var err error
+
+	wrapper := NewAPIWrapper("delete", endpoint)
+	err = c.do(&wrapper)
+
+	return wrapper, err
+}
+
 // authenticate makes a call to get the access token
 func (c *Client) authenticate() error {
 	var err error
