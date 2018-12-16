@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	moltin "github.com/andrew-waters/moltin-go-client"
+	"github.com/andrew-waters/gomo"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/joho/godotenv"
 )
@@ -29,8 +29,8 @@ type YourProductStruct struct {
 func main() {
 
 	// create an implicit client
-	client, err := moltin.NewClient(
-		moltin.NewImplicitCredentials(
+	client, err := gomo.NewClient(
+		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)

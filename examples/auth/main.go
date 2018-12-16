@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	moltin "github.com/andrew-waters/moltin-go-client"
+	"github.com/andrew-waters/gomo"
 	"github.com/joho/godotenv"
 )
 
@@ -19,8 +19,8 @@ func init() {
 func main() {
 
 	// Create a new client with Client Credentials
-	client, err := moltin.NewClient(
-		moltin.NewClientCredentials(
+	client, err := gomo.NewClient(
+		gomo.NewClientCredentials(
 			os.Getenv("CLIENT_ID"),
 			os.Getenv("CLIENT_SECRET"),
 		),
@@ -31,8 +31,8 @@ func main() {
 	out(client)
 
 	// Create a new client with Implicit Credentials
-	client, err = moltin.NewClient(
-		moltin.NewImplicitCredentials(
+	client, err = gomo.NewClient(
+		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)
@@ -43,6 +43,6 @@ func main() {
 
 }
 
-func out(client moltin.Client) {
+func out(client gomo.Client) {
 	fmt.Printf("`%s` client created:\nAccess token - `%s`\n\n", client.GrantType(), client.AccessToken)
 }

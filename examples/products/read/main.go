@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	moltin "github.com/andrew-waters/moltin-go-client"
-	"github.com/andrew-waters/moltin-go-client/entities"
+	"github.com/andrew-waters/gomo"
+	"github.com/andrew-waters/gomo/entities"
 	"github.com/joho/godotenv"
 )
 
@@ -19,8 +19,8 @@ func init() {
 
 func main() {
 
-	client, err := moltin.NewClient(
-		moltin.NewImplicitCredentials(
+	client, err := gomo.NewClient(
+		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)

@@ -11,8 +11,8 @@ A Golang client for the [moltin](https://moltin.com) API.
 THe most common type of authentication for secure execution environments (eg a server you control).
 
 ```golang
-client, err := moltin.NewClient(
-  moltin.NewClientCredentials(
+client, err := gomo.NewClient(
+  gomo.NewClientCredentials(
     ":client_id",
     ":client_secret",
   ),
@@ -28,8 +28,8 @@ if err != nil {
 This should be used if your code could be exposed. If you only need read access to your data, this is recommended.
 
 ```golang
-client, err := moltin.NewClient(
-  moltin.NewImplicitCredentials(
+client, err := gomo.NewClient(
+  gomo.NewImplicitCredentials(
     ":client_id",
   ),
 )
@@ -49,7 +49,7 @@ Because Go is statically typed, you need to provide a pointer to a concrete stru
 To get resources from the API:
 
 ```golang
-product := moltin.Product{} // this is a standard Moltin product
+product := gomo.Product{} // this is a standard Moltin product
 wrapper, err := client.Get("products/:id", &product)
 ```
 
@@ -71,7 +71,7 @@ wrapper, err := client.Get("products/:id", &product)
 To include data, you should pass your target included object where the response will be unmarshalled to:
 
 ```golang
-product := moltin.Product{}
+product := entities.Product{}
 included  := entities.ProductIncludes{}
 wrapper, err := client.Get("products/:id", &product, &included)
 ```

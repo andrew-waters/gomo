@@ -1,4 +1,4 @@
-package moltin
+package gomo
 
 // AuthResponse contains the repsonse from the auth call
 type AuthResponse struct {
