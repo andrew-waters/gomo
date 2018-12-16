@@ -6,4 +6,5 @@ const (
 	collectionType = "collection"
 	productType    = "product"
 	fileType       = "file"
+	currencyType   = "currency"
 )
