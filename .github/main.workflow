@@ -4,6 +4,6 @@ workflow "Test on Push" {
 }
 
 action "test" {
-  uses = "go"
+  uses = "docker://go"
   args = "test ./..."
 }
