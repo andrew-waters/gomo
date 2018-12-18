@@ -5,5 +5,5 @@ workflow "Test on Push" {
 
 action "test" {
   uses = "go"
-  args = "go test ./..."
+  args = "test ./..."
 }
