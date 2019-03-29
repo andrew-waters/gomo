@@ -79,40 +79,24 @@ func (c *Client) do(wrapper *APIWrapper) error {
 
 // Post makes a POST request to the API
 func (c *Client) Post(endpoint string, resource interface{}) (APIWrapper, error) {
-	var err error
-
-	wrapper := NewAPIWrapper("post", endpoint, resource)
-	err = c.do(&wrapper)
-
-	return wrapper, err
+	wrapper := newAPIWrapper("post", endpoint, resource)
+	return wrapper, c.do(&wrapper)
 }
 
 // Get makes a GET request to the API
 func (c *Client) Get(endpoint string, resource ...interface{}) (APIWrapper, error) {
-	var err error
-
-	wrapper := NewAPIWrapper("get", endpoint, resource...)
-	err = c.do(&wrapper)
-
-	return wrapper, err
+	wrapper := newAPIWrapper("get", endpoint, resource...)
+	return wrapper, c.do(&wrapper)
 }
 
 // Delete makes a DELETE request to the API
 func (c *Client) Delete(endpoint string) (APIWrapper, error) {
-	var err error
-
-	wrapper := NewAPIWrapper("delete", endpoint)
-	err = c.do(&wrapper)
-
-	return wrapper, err
+	wrapper := newAPIWrapper("delete", endpoint)
+	return wrapper, c.do(&wrapper)
 }
 
 // Put makes a PUT request to the API
 func (c *Client) Put(endpoint string, resource interface{}) (APIWrapper, error) {
-	var err error
-
-	wrapper := NewAPIWrapper("put", endpoint, resource)
-	err = c.do(&wrapper)
-
-	return wrapper, err
+	wrapper := newAPIWrapper("put", endpoint, resource)
+	return wrapper, c.do(&wrapper)
 }
