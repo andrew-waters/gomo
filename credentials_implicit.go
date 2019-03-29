@@ -14,7 +14,6 @@ type implicitCredentials struct {
 	clientID string
 }
 
-//
 func (ic implicitCredentials) grantType() string {
 	return ICGrantType
 }

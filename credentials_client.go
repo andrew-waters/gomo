@@ -10,7 +10,7 @@ func NewClientCredentials(clientID string, clientSecret string) clientCredential
 	}
 }
 
-// ClientCredentials contains credentials for server side processing
+// clientCredentials contains credentials for server side processing
 type clientCredentials struct {
 	clientID     string
 	clientSecret string
