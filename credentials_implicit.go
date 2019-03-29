@@ -15,7 +15,7 @@ type implicitCredentials struct {
 }
 
 func (ic implicitCredentials) grantType() string {
-	return ICGrantType
+	return implicitGrantType
 }
 
 func (ic implicitCredentials) authFormValues() url.Values {

@@ -3,10 +3,8 @@ package gomo
 import "net/url"
 
 const (
-	// CCGrantType is the string value for a client credentials grant type
-	CCGrantType = "client_credentials"
-	// ICGrantType is the string value for an implicit credentials grant type
-	ICGrantType = "implicit"
+	clientCredentialsGrantType = "client_credentials"
+	implicitGrantType          = "implicit"
 )
 
 // Credentials provides an interface for different credential types

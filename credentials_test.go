@@ -10,7 +10,7 @@ func TestNewClientCredentials(t *testing.T) {
 	if creds.clientSecret != "def" {
 		t.Error("Incorrect client secret")
 	}
-	if creds.grantType() != CCGrantType {
+	if creds.grantType() != clientCredentialsGrantType {
 		t.Error("Incorrect grant type")
 	}
 }
@@ -20,7 +20,7 @@ func TestNewImplicitCredentials(t *testing.T) {
 	if creds.clientID != "abc" {
 		t.Error("Incorrect client id")
 	}
-	if creds.grantType() != ICGrantType {
+	if creds.grantType() != implicitGrantType {
 		t.Error("Incorrect grant type")
 	}
 }

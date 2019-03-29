@@ -17,7 +17,7 @@ type clientCredentials struct {
 }
 
 func (cc clientCredentials) grantType() string {
-	return CCGrantType
+	return clientCredentialsGrantType
 }
 
 func (cc clientCredentials) authFormValues() url.Values {
