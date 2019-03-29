@@ -12,6 +12,7 @@ func testClient() Client {
 		Endpoint:    defaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
+		Logger:      defaultLogger,
 	}
 }
 
@@ -99,5 +100,26 @@ func TestClientGrantTypeClientCredentials(t *testing.T) {
 
 	if client.GrantType() != "client_credentials" {
 		t.Error("Client Credentials do not return client_credentials grant type")
+	}
+}
+
+func TestCustomLogger(t *testing.T) {
+	client := NewClient(
+		NewClientCredentials(
+			"abc",
+			"def",
+		),
+	)
+	client.EnableDebug()
+
+	logHit := false
+	client.CustomLogger(func(c *Client, msg interface{}) {
+		logHit = true
+	})
+	err := client.Authenticate()
+	client.Log(err)
+
+	if logHit == false {
+		t.Errorf("log not hit")
 	}
 }
