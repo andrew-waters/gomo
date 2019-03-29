@@ -14,8 +14,8 @@ import (
 const (
 	// DefaultAPIVersion means less config from the user
 	DefaultAPIVersion = "v2"
-	// DefaulEndpoint means less config from the user
-	DefaulEndpoint = "https://api.moltin.com"
+	// DefaultEndpoint means less config from the user
+	DefaultEndpoint = "https://api.moltin.com"
 	// DefaultUserAgent is sent as a header in the API call
 	DefaultUserAgent = "gomo"
 )
@@ -38,7 +38,7 @@ func NewClient(c Credentials) (Client, error) {
 	client := Client{
 		credentials: c,
 		APIVersion:  DefaultAPIVersion,
-		Endpoint:    DefaulEndpoint,
+		Endpoint:    DefaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
 	}
