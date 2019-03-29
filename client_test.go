@@ -2,6 +2,7 @@ package gomo
 
 import (
 	"net/http"
+	"os"
 	"testing"
 )
 
@@ -24,5 +25,16 @@ func TestClientDefaults(t *testing.T) {
 	expectedAPIVersion := "v2"
 	if c.APIVersion != expectedAPIVersion {
 		t.Errorf("Incorrect API version: %s (expected %s)", c.APIVersion, expectedAPIVersion)
+	}
+}
+
+func TestClientAuthenticatesImplicitly(t *testing.T) {
+	_, err := NewClient(
+		NewImplicitCredentials(
+			os.Getenv("CLIENT_ID"),
+		),
+	)
+	if err != nil {
+		t.Errorf("Could not authenticate implicitly: %s", err)
 	}
 }
