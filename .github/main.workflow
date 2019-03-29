@@ -1,8 +1,8 @@
 workflow "On Push" {
   on = "push"
-  resolves = ["test"]
+  resolves = ["go test"]
 }
 
-action "test" {
+action "go test" {
   uses = "andrew-waters/actions/go/test@master"
 }
