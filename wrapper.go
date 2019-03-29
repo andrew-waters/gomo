@@ -3,22 +3,29 @@ package gomo
 import (
 	"net/http"
 	"strings"
-	"time"
 )
 
-// APIWrapper is a wrapper around a request and response to the API
-type APIWrapper struct {
+// wrapper is a wrapper around a request and response to the API
+type wrapper struct {
 	Method        string
 	Endpoint      string
 	StatusCode    int
 	ExecutionTime APIExecution
 	Body          interface{}
 	Request       *http.Request
-	Response      APIResponse
+	Response      response
+}
+
+// APIResponse contains the response data to the call
+type response struct {
+	Data     interface{} `json:"data"`
+	Meta     interface{} `json:"meta"`
+	Included interface{} `json:"included"`
+	Errors   []APIError  `json:"errors"`
 }
 
 // newAPIWrapper creates a new wrapper for this call
-func newAPIWrapper(method string, endpoint string, resources ...interface{}) APIWrapper {
+func newWrapper(method string, endpoint string, resources ...interface{}) wrapper {
 
 	var targetResource interface{}
 	var targetIncludes interface{}
@@ -37,58 +44,13 @@ func newAPIWrapper(method string, endpoint string, resources ...interface{}) API
 		targetResource.SetType()
 	}
 
-	return APIWrapper{
+	return wrapper{
 		Method:   strings.ToUpper(method),
 		Endpoint: endpoint,
 		Body:     targetResource,
-		Response: APIResponse{
+		Response: response{
 			Data:     targetResource,
 			Included: targetIncludes,
 		},
 	}
-}
-
-// APIResponse contains the response data to the call
-type APIResponse struct {
-	Data     interface{} `json:"data"`
-	Meta     interface{} `json:"meta"`
-	Included interface{} `json:"included"`
-	Errors   []APIError  `json:"errors"`
-}
-
-// APIExecution records the execution time of the call
-type APIExecution struct {
-	StartTime time.Time
-	EndTime   time.Time
-}
-
-// Start the timer
-func (e *APIExecution) Start() {
-	e.StartTime = time.Now()
-}
-
-// End the timer
-func (e *APIExecution) End() {
-	e.EndTime = time.Now()
-}
-
-// Elapsed returns the duration of the timer
-func (e APIExecution) Elapsed() time.Duration {
-	return e.EndTime.Sub(e.StartTime)
-}
-
-// APIError is an error returned by the API so that you can include error speciifc logic in your own implementation
-//
-// 	if error.Status == 404 {
-// 		// create something
-// 	}
-type APIError struct {
-	Status int    `json:"status"`
-	Detail string `json:"detail"`
-	Title  string `json:"title"`
-}
-
-// APIRequestBodyWrapper is a wrapper for the reuqest body which elimates the need for `data` to be in the entity structs
-type APIRequestBodyWrapper struct {
-	Data interface{} `json:"data"`
 }

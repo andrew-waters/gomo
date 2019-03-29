@@ -28,13 +28,13 @@ func (c Client) buildRequest(method string, endpoint string, body []byte) (*http
 	return req, nil
 }
 
-func (c *Client) do(wrapper *APIWrapper) error {
+func (c *Client) do(wrapper *wrapper) error {
 	var err error
 
 	var body []byte
 	if wrapper.Body != nil {
 
-		rb := APIResponse{
+		rb := response{
 			Data: wrapper.Body,
 		}
 		rbj, err := json.Marshal(rb)
@@ -78,25 +78,25 @@ func (c *Client) do(wrapper *APIWrapper) error {
 }
 
 // Post makes a POST request to the API
-func (c *Client) Post(endpoint string, resource interface{}) (APIWrapper, error) {
-	wrapper := newAPIWrapper("post", endpoint, resource)
+func (c *Client) Post(endpoint string, resource interface{}) (wrapper, error) {
+	wrapper := newWrapper("post", endpoint, resource)
 	return wrapper, c.do(&wrapper)
 }
 
 // Get makes a GET request to the API
-func (c *Client) Get(endpoint string, resource ...interface{}) (APIWrapper, error) {
-	wrapper := newAPIWrapper("get", endpoint, resource...)
+func (c *Client) Get(endpoint string, resource ...interface{}) (wrapper, error) {
+	wrapper := newWrapper("get", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Delete makes a DELETE request to the API
-func (c *Client) Delete(endpoint string) (APIWrapper, error) {
-	wrapper := newAPIWrapper("delete", endpoint)
+func (c *Client) Delete(endpoint string) (wrapper, error) {
+	wrapper := newWrapper("delete", endpoint)
 	return wrapper, c.do(&wrapper)
 }
 
 // Put makes a PUT request to the API
-func (c *Client) Put(endpoint string, resource interface{}) (APIWrapper, error) {
-	wrapper := newAPIWrapper("put", endpoint, resource)
+func (c *Client) Put(endpoint string, resource interface{}) (wrapper, error) {
+	wrapper := newWrapper("put", endpoint, resource)
 	return wrapper, c.do(&wrapper)
 }
