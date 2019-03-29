@@ -1,4 +1,4 @@
-# gomo - a Moltin Go Client
+# gomo - a Go Client for the Moltin API
 
 [![GoDoc](https://godoc.org/github.com/andrew-waters/gomo?status.svg)](https://godoc.org/github.com/andrew-waters/gomo)
 [![Maintainability](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/maintainability)](https://codeclimate.com/github/andrew-waters/gomo/maintainability)
@@ -26,11 +26,10 @@ In order to fully test the package, you will need a Moltin account to add your c
 cp example.env .env
 ```
 
-Add your credntials and run:
+Add your credentials and run:
 
 ```bash
 source .env && go test ./...
 ```
-
 
 If you do not suply a client_id and client_secret, we will skip tests that leverage the live API.
