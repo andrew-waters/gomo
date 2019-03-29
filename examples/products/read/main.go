@@ -19,18 +19,18 @@ func init() {
 
 func main() {
 
-	client, err := gomo.NewClient(
+	client := gomo.NewClient(
 		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)
 
-	if err != nil {
+	if err := client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 
 	products := []entities.Product{}
-	r, err := client.Get("products", &products)
+	r, _ := client.Get("products", &products)
 
 	fmt.Printf("Status Code: %d\nResource Count: %d\n", r.StatusCode, len(products))
 

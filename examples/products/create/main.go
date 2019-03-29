@@ -21,14 +21,14 @@ func init() {
 
 func main() {
 
-	client, err := gomo.NewClient(
+	client := gomo.NewClient(
 		gomo.NewClientCredentials(
 			os.Getenv("CLIENT_ID"),
 			os.Getenv("CLIENT_SECRET"),
 		),
 	)
 
-	if err != nil {
+	if err := client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 
@@ -53,8 +53,8 @@ func main() {
 		CommodityType: "physical",
 	}
 
-	r, err := client.Post("products", &product)
-	r, err = client.Get(fmt.Sprintf("products/%s", product.ID), &product)
+	r, _ := client.Post("products", &product)
+	r, _ = client.Get(fmt.Sprintf("products/%s", product.ID), &product)
 	fmt.Printf("Status Code: %d\n", r.StatusCode)
 	fmt.Printf("Time Taken: %v\n", r.ExecutionTime.Elapsed())
 	spew.Dump(product)

@@ -19,24 +19,24 @@ func init() {
 func main() {
 
 	// Create a new client with Client Credentials
-	client, err := gomo.NewClient(
+	client := gomo.NewClient(
 		gomo.NewClientCredentials(
 			os.Getenv("CLIENT_ID"),
 			os.Getenv("CLIENT_SECRET"),
 		),
 	)
-	if err != nil {
+	if err := client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 	out(client)
 
 	// Create a new client with Implicit Credentials
-	client, err = gomo.NewClient(
+	client = gomo.NewClient(
 		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)
-	if err != nil {
+	if err := client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 	out(client)
