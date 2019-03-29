@@ -7,12 +7,9 @@ import (
 )
 
 const (
-	// DefaultAPIVersion means less config from the user
-	DefaultAPIVersion = "v2"
-	// DefaultEndpoint means less config from the user
-	DefaultEndpoint = "https://api.moltin.com"
-	// DefaultUserAgent is sent as a header in the API call
-	DefaultUserAgent = "gomo"
+	defaultAPIVersion = "v2"
+	defaultEndpoint   = "https://api.moltin.com"
+	defaultUserAgent  = "gomo"
 )
 
 // Client is the main client struct
@@ -30,8 +27,8 @@ type Client struct {
 func NewClient(c credentials) Client {
 	return Client{
 		credentials: c,
-		APIVersion:  DefaultAPIVersion,
-		Endpoint:    DefaultEndpoint,
+		APIVersion:  defaultAPIVersion,
+		Endpoint:    defaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
 	}
@@ -41,7 +38,7 @@ func NewClient(c credentials) Client {
 func NewClientWithCustomEndpoint(c credentials, e string) Client {
 	return Client{
 		credentials: c,
-		APIVersion:  DefaultAPIVersion,
+		APIVersion:  defaultAPIVersion,
 		Endpoint:    e,
 		Debug:       false,
 		httpClient:  &http.Client{},

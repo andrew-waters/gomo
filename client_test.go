@@ -10,8 +10,8 @@ import (
 func testClient() Client {
 	return Client{
 		credentials: NewClientCredentials("abc", "def"),
-		APIVersion:  DefaultAPIVersion,
-		Endpoint:    DefaultEndpoint,
+		APIVersion:  defaultAPIVersion,
+		Endpoint:    defaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
 	}

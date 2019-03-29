@@ -23,7 +23,7 @@ func (c Client) buildRequest(method string, endpoint string, body []byte) (*http
 
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer: %s", c.AccessToken))
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("User-Agent", DefaultUserAgent)
+	req.Header.Add("User-Agent", defaultUserAgent)
 
 	return req, nil
 }
