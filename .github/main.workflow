@@ -10,5 +10,5 @@ action "go test" {
 
 action "codeclimate report" {
   uses = "andrew-waters/actions/go/codeclimate@master"
-  secrets = ["CC_TEST_REPORTER_ID"]
+  secrets = ["CLIENT_ID", "CLIENT_SECRET", "CC_TEST_REPORTER_ID"]
 }
