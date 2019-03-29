@@ -32,7 +32,7 @@ func (c *Client) Authenticate() error {
 		return err
 	}
 
-	ar := AuthResponse{}
+	ar := authResponse{}
 	err = json.Unmarshal(b, &ar)
 	if err != nil {
 		return err

@@ -1,7 +1,7 @@
 package gomo
 
 // AuthResponse contains the repsonse from the auth call
-type AuthResponse struct {
+type authResponse struct {
 	Expires     int    `json:"expires"`
 	ExpiresIn   int    `json:"expires_in"`
 	Identifier  string `json:"identifier"`
