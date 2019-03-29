@@ -1,9 +1,7 @@
 package gomo
 
 import (
-	"log"
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -54,46 +52,52 @@ func TestClientDebug(t *testing.T) {
 	}
 }
 
-func TestClientAuthenticatesWithClientCredentials(t *testing.T) {
-	clientID := os.Getenv("CLIENT_ID")
-	clientSecret := os.Getenv("CLIENT_SECRET")
+func TestCustomEndpoint(t *testing.T) {
+	endpoint := "https://yourdomain.com"
 
-	if clientID == "" {
-		log.Println("No client id, skipping test")
-		return
-	}
-	if clientSecret == "" {
-		log.Println("No client secret, skipping test")
-		return
+	c := testClient()
+
+	c.CustomEndpoint(endpoint)
+
+	if c.Endpoint != endpoint {
+		t.Errorf("Incorrect debug val: %s (expected %s)", c.Endpoint, endpoint)
 	}
 
-	client := NewClient(
-		NewClientCredentials(
-			clientID,
-			clientSecret,
-		),
+}
+
+func TestNewClientWithCustomEndpoint(t *testing.T) {
+	endpoint := "https://yourdomain.com"
+	c := NewClientWithCustomEndpoint(
+		NewClientCredentials("abc", "def"),
+		endpoint,
 	)
 
-	if err := client.Authenticate(); err != nil {
-		t.Errorf("Could not authenticate with client credentials: %s", err)
+	if c.Endpoint != endpoint {
+		t.Errorf("Incorrect endpoint: %s (expected %s)", c.Endpoint, endpoint)
 	}
 }
 
-func TestClientAuthenticatesImplicitly(t *testing.T) {
-	clientID := os.Getenv("CLIENT_ID")
-
-	if clientID == "" {
-		log.Println("No client id, skipping test")
-		return
-	}
-
+func TestClientGrantTypeImplicit(t *testing.T) {
 	client := NewClient(
 		NewImplicitCredentials(
-			clientID,
+			"abc",
 		),
 	)
 
-	if err := client.Authenticate(); err != nil {
-		t.Errorf("Could not authenticate implicitly: %s", err)
+	if client.GrantType() != "implicit" {
+		t.Error("Implicit Credentials do not return implicit grant type")
+	}
+}
+
+func TestClientGrantTypeClientCredentials(t *testing.T) {
+	client := NewClient(
+		NewClientCredentials(
+			"abc",
+			"def",
+		),
+	)
+
+	if client.GrantType() != "client_credentials" {
+		t.Error("Client Credentials do not return client_credentials grant type")
 	}
 }
