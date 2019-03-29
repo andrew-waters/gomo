@@ -6,7 +6,9 @@
 
 A Golang client for the [moltin](https://moltin.com) API.
 
-`go get github.com/andrew-waters/gomo`
+```bash
+go get github.com/andrew-waters/gomo
+```
 
 
 ## Documentation
@@ -20,13 +22,13 @@ A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki).
 
 In order to fully test the package, you will need a Moltin account to add your credentials to an environment file:
 
-```
+```bash
 cp example.env .env
 ```
 
 Add your credntials and run:
 
-```
+```bash
 source .env && go test ./...
 ```
 
