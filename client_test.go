@@ -1,7 +1,10 @@
 package gomo
 
 import (
+	"bytes"
+	"log"
 	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -121,5 +124,38 @@ func TestCustomLogger(t *testing.T) {
 
 	if logHit == false {
 		t.Errorf("log not hit")
+	}
+}
+
+func TestDefaultLogger(t *testing.T) {
+	client := NewClient(
+		NewClientCredentials(
+			"abc",
+			"def",
+		),
+	)
+	client.EnableDebug()
+
+	var debugOnOut bytes.Buffer
+	log.SetOutput(&debugOnOut)
+
+	client.Log("a test")
+
+	// the log time is included eg "2019/03/29 23:44:59 a test"
+	// remove the date and new line then test the rest of the string
+	o := strings.TrimSuffix(debugOnOut.String()[20:], "\n")
+
+	if o != "a test" {
+		t.Errorf("Logger did not work: `%s` (expected `%s`)", o, "a test")
+	}
+
+	client.DisableDebug()
+
+	var debugOffOut bytes.Buffer
+	log.SetOutput(&debugOffOut)
+
+	client.Log("a test")
+	if debugOffOut.String() != "" {
+		t.Errorf("Logger did not work - did not expect any output: `%s`", debugOffOut.String())
 	}
 }
