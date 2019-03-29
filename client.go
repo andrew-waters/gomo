@@ -68,10 +68,22 @@ func (c Client) GrantType() string {
 	return c.credentials.grantType()
 }
 
+// CustomEndpoint overrides DefaulEndpoint on the client
+func (c *Client) CustomEndpoint(e string) {
+	c.Endpoint = e
+}
+
+// EnableDebug logs debugging info from the API calls
 func (c *Client) EnableDebug() {
 	c.Debug = true
 }
 
+// DisableDebug stops logs form API calls
+func (c *Client) DisableDebug() {
+	c.Debug = false
+}
+
+// Log will dump debug info onto stdout
 func (c *Client) Log(msgs ...interface{}) {
 	for _, msg := range msgs {
 		c.Logs = append(c.Logs, msg)
