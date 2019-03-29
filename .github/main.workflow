@@ -5,4 +5,5 @@ workflow "On Push" {
 
 action "go test" {
   uses = "andrew-waters/actions/go/test@master"
+  secrets = ["CLIENT_ID", "CLIENT_SECRET"]
 }
