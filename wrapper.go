@@ -17,8 +17,8 @@ type APIWrapper struct {
 	Response      APIResponse
 }
 
-// NewAPIWrapper creates a new wrapper for this call
-func NewAPIWrapper(method string, endpoint string, resources ...interface{}) APIWrapper {
+// newAPIWrapper creates a new wrapper for this call
+func newAPIWrapper(method string, endpoint string, resources ...interface{}) APIWrapper {
 
 	var targetResource interface{}
 	var targetIncludes interface{}
