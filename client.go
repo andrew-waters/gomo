@@ -17,7 +17,7 @@ const (
 	// DefaulEndpoint means less config from the user
 	DefaulEndpoint = "https://api.moltin.com"
 	// DefaultUserAgent is sent as a header in the API call
-	DefaultUserAgent = "go-client"
+	DefaultUserAgent = "gomo"
 )
 
 // Client is the main client struct
