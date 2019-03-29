@@ -17,7 +17,7 @@ const (
 	// DefaulEndpoint means less config from the user
 	DefaulEndpoint = "https://api.moltin.com"
 	// DefaultUserAgent is sent as a header in the API call
-	DefaultUserAgent = "go-client"
+	DefaultUserAgent = "gomo"
 )
 
 // Client is the main client struct
@@ -47,15 +47,43 @@ func NewClient(c Credentials) (Client, error) {
 	return client, err
 }
 
+// NewClientWithCustomEndpoint creates a new client for you to make requests with to a different endpoint
+func NewClientWithCustomEndpoint(c Credentials, e string) (Client, error) {
+	var err error
+
+	client := Client{
+		credentials: c,
+		APIVersion:  DefaultAPIVersion,
+		Endpoint:    e,
+		Debug:       false,
+		httpClient:  &http.Client{},
+	}
+	err = client.authenticate()
+
+	return client, err
+}
+
 // GrantType returns the string value of the current crednetials grant type
 func (c Client) GrantType() string {
 	return c.credentials.grantType()
 }
 
+// CustomEndpoint overrides DefaulEndpoint on the client
+func (c *Client) CustomEndpoint(e string) {
+	c.Endpoint = e
+}
+
+// EnableDebug logs debugging info from the API calls
 func (c *Client) EnableDebug() {
 	c.Debug = true
 }
 
+// DisableDebug stops logs form API calls
+func (c *Client) DisableDebug() {
+	c.Debug = false
+}
+
+// Log will dump debug info onto stdout
 func (c *Client) Log(msgs ...interface{}) {
 	for _, msg := range msgs {
 		c.Logs = append(c.Logs, msg)
@@ -81,7 +109,7 @@ func (c Client) buildRequest(method string, endpoint string, body []byte) (*http
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", c.AccessToken)
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer: %s", c.AccessToken))
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", DefaultUserAgent)
 

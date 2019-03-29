@@ -39,6 +39,19 @@ if err != nil {
 }
 ```
 
+### Using custom endpoints
+
+You can instatiate a client with a custom API endpoint using the `NewClientWithCustomEndpoint` func:
+
+```golang
+client, err := gomo.NewClientWithCustomEndpoint(
+  gomo.NewClientCredentials(
+    ":client_id",
+    ":client_secret",
+  ),
+  "https://alt.domain.tld",
+)
+```
 
 ## Working with Resources
 
