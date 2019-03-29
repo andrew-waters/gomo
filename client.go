@@ -47,6 +47,22 @@ func NewClient(c Credentials) (Client, error) {
 	return client, err
 }
 
+// NewClientWithCustomEndpoint creates a new client for you to make requests with to a different endpoint
+func NewClientWithCustomEndpoint(c Credentials, e string) (Client, error) {
+	var err error
+
+	client := Client{
+		credentials: c,
+		APIVersion:  DefaultAPIVersion,
+		Endpoint:    e,
+		Debug:       false,
+		httpClient:  &http.Client{},
+	}
+	err = client.authenticate()
+
+	return client, err
+}
+
 // GrantType returns the string value of the current crednetials grant type
 func (c Client) GrantType() string {
 	return c.credentials.grantType()
