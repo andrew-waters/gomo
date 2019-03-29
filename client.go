@@ -22,7 +22,7 @@ const (
 
 // Client is the main client struct
 type Client struct {
-	credentials Credentials
+	credentials credentials
 	APIVersion  string
 	Endpoint    string
 	AccessToken string
@@ -32,35 +32,25 @@ type Client struct {
 }
 
 // NewClient creates a new client for you to make requests with
-func NewClient(c Credentials) (Client, error) {
-	var err error
-
-	client := Client{
+func NewClient(c credentials) Client {
+	return Client{
 		credentials: c,
 		APIVersion:  DefaultAPIVersion,
 		Endpoint:    DefaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
 	}
-	err = client.authenticate()
-
-	return client, err
 }
 
 // NewClientWithCustomEndpoint creates a new client for you to make requests with to a different endpoint
-func NewClientWithCustomEndpoint(c Credentials, e string) (Client, error) {
-	var err error
-
-	client := Client{
+func NewClientWithCustomEndpoint(c credentials, e string) Client {
+	return Client{
 		credentials: c,
 		APIVersion:  DefaultAPIVersion,
 		Endpoint:    e,
 		Debug:       false,
 		httpClient:  &http.Client{},
 	}
-	err = client.authenticate()
-
-	return client, err
 }
 
 // GrantType returns the string value of the current crednetials grant type
@@ -205,8 +195,8 @@ func (c *Client) Put(endpoint string, resource interface{}) (APIWrapper, error) 
 	return wrapper, err
 }
 
-// authenticate makes a call to get the access token
-func (c *Client) authenticate() error {
+// Authenticate makes a call to get the access token for the client's credentials
+func (c *Client) Authenticate() error {
 	var err error
 
 	r, err := http.PostForm(c.authURL(), c.credentials.authFormValues())

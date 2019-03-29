@@ -29,14 +29,14 @@ type YourProductStruct struct {
 func main() {
 
 	// create an implicit client
-	client, err := gomo.NewClient(
+	client := gomo.NewClient(
 		gomo.NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)
 
-	// handle client error
-	if err != nil {
+	// handle authentication error
+	if err := client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 

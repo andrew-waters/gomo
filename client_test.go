@@ -54,24 +54,25 @@ func TestClientDebug(t *testing.T) {
 }
 
 func TestClientAuthenticatesWithClientCredentials(t *testing.T) {
-	_, err := NewClient(
+	client := NewClient(
 		NewClientCredentials(
 			os.Getenv("CLIENT_ID"),
 			os.Getenv("CLIENT_SECRET"),
 		),
 	)
-	if err != nil {
+	if err := client.Authenticate(); err != nil {
 		t.Errorf("Could not authenticate with client credentials: %s", err)
 	}
 }
 
 func TestClientAuthenticatesImplicitly(t *testing.T) {
-	_, err := NewClient(
+	client := NewClient(
 		NewImplicitCredentials(
 			os.Getenv("CLIENT_ID"),
 		),
 	)
-	if err != nil {
+
+	if err := client.Authenticate(); err != nil {
 		t.Errorf("Could not authenticate implicitly: %s", err)
 	}
 }

@@ -22,14 +22,14 @@ func init() {
 func main() {
 	var err error
 
-	client, err := gomo.NewClient(
+	client := gomo.NewClient(
 		gomo.NewClientCredentials(
 			os.Getenv("CLIENT_ID"),
 			os.Getenv("CLIENT_SECRET"),
 		),
 	)
 
-	if err != nil {
+	if err = client.Authenticate(); err != nil {
 		log.Fatal(err)
 	}
 

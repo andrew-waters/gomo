@@ -1,14 +1,18 @@
 # gomo - a Moltin Go Client
 
+[![GoDoc](https://godoc.org/github.com/andrew-waters/gomo?status.svg)](https://godoc.org/github.com/andrew-waters/gomo)
+
 A Golang client for the [moltin](https://moltin.com) API.
 
 `go get github.com/andrew-waters/gomo`
 
-## Instantiating a Client
+Documentation is available on [GoDoc](https://godoc.org/github.com/andrew-waters/gomo)
 
-### Client Credentials
+## Quickstart
 
-THe most common type of authentication for secure execution environments (eg a server you control).
+### Authenticating with a Client Credentials grant type
+
+The most common type of authentication for secure execution environments (eg a server you control).
 
 ```golang
 client, err := gomo.NewClient(
@@ -23,7 +27,7 @@ if err != nil {
 }
 ```
 
-### Implicit
+### Authenticating with an Implicit grant type
 
 This should be used if your code could be exposed. If you only need read access to your data, this is recommended.
 
