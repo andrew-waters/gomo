@@ -2,7 +2,6 @@ package gomo
 
 import (
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -31,7 +30,7 @@ func TestClientDefaults(t *testing.T) {
 func TestClientAuthenticatesImplicitly(t *testing.T) {
 	_, err := NewClient(
 		NewImplicitCredentials(
-			os.Getenv("CLIENT_ID"),
+			"abc234",
 		),
 	)
 	if err != nil {
