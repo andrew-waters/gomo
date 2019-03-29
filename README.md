@@ -33,4 +33,3 @@ source .env && go test ./...
 ```
 
 If you do not suply a client_id and client_secret, we will skip tests that leverage the live API.
-
