@@ -2,6 +2,7 @@ package gomo
 
 import (
 	"net/http"
+	"os"
 	"testing"
 )
 
@@ -27,10 +28,22 @@ func TestClientDefaults(t *testing.T) {
 	}
 }
 
+func TestClientAuthenticatesWithClientCredentials(t *testing.T) {
+	_, err := NewClient(
+		NewClientCredentials(
+			os.Getenv("CLIENT_ID"),
+			os.Getenv("CLIENT_SECRET"),
+		),
+	)
+	if err != nil {
+		t.Errorf("Could not authenticate with client credentials: %s", err)
+	}
+}
+
 func TestClientAuthenticatesImplicitly(t *testing.T) {
 	_, err := NewClient(
 		NewImplicitCredentials(
-			"abc234",
+			os.Getenv("CLIENT_ID"),
 		),
 	)
 	if err != nil {
