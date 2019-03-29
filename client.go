@@ -1,9 +1,8 @@
 package gomo
 
 import (
+	"log"
 	"net/http"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -11,6 +10,12 @@ const (
 	defaultEndpoint   = "https://api.moltin.com"
 	defaultUserAgent  = "gomo"
 )
+
+var defaultLogger = func(c *Client, msg interface{}) {
+	if c.Debug {
+		log.Println(msg)
+	}
+}
 
 // Client is the main client struct
 type Client struct {
@@ -21,6 +26,7 @@ type Client struct {
 	Debug       bool
 	Logs        []interface{}
 	httpClient  *http.Client
+	Logger      func(*Client, interface{})
 }
 
 // NewClient creates a new client for you to make requests with
@@ -31,6 +37,7 @@ func NewClient(c credentials) Client {
 		Endpoint:    defaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
+		Logger:      defaultLogger,
 	}
 }
 
@@ -42,11 +49,12 @@ func NewClientWithCustomEndpoint(c credentials, e string) Client {
 		Endpoint:    e,
 		Debug:       false,
 		httpClient:  &http.Client{},
+		Logger:      defaultLogger,
 	}
 }
 
 // GrantType returns the string value of the current crednetials grant type
-func (c Client) GrantType() string {
+func (c *Client) GrantType() string {
 	return c.credentials.grantType()
 }
 
@@ -65,12 +73,15 @@ func (c *Client) DisableDebug() {
 	c.Debug = false
 }
 
+// CustomLogger allows you to pass in a custom log function to override the client default
+func (c *Client) CustomLogger(l func(*Client, interface{})) {
+	c.Logger = l
+}
+
 // Log will dump debug info onto stdout
 func (c *Client) Log(msgs ...interface{}) {
 	for _, msg := range msgs {
 		c.Logs = append(c.Logs, msg)
-		if c.Debug {
-			spew.Dump(msg)
-		}
+		c.Logger(c, msg)
 	}
 }

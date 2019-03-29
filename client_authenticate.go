@@ -8,6 +8,17 @@ import (
 	"net/http"
 )
 
+var errUnableToAuthenticate = errors.New("Unable to authenticate")
+
+// AuthResponse contains the repsonse from the auth call
+type authResponse struct {
+	Expires     int    `json:"expires"`
+	ExpiresIn   int    `json:"expires_in"`
+	Identifier  string `json:"identifier"`
+	TokenType   string `json:"token_type"`
+	AccessToken string `json:"access_token"`
+}
+
 func (c Client) authURL() string {
 	return fmt.Sprintf("%s/oauth/access_token", c.Endpoint)
 }
@@ -22,7 +33,7 @@ func (c *Client) Authenticate() error {
 	}
 
 	if r.StatusCode != 200 {
-		return errors.New("Unable to authenticate")
+		return errUnableToAuthenticate
 	}
 
 	defer r.Body.Close()
