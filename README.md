@@ -1,4 +1,4 @@
-# gomo - a Go Client for Moltin
+# gomo - a Go Client for the Moltin API
 
 [![GoDoc](https://godoc.org/github.com/andrew-waters/gomo?status.svg)](https://godoc.org/github.com/andrew-waters/gomo)
 [![Maintainability](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/maintainability)](https://codeclimate.com/github/andrew-waters/gomo/maintainability)
