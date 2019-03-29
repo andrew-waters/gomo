@@ -1,14 +1,8 @@
-workflow "Test on Push" {
+workflow "On Push" {
   on = "push"
-  resolves = ["Test coverage"]
+  resolves = ["build"]
 }
 
-action "Run tests" {
-  uses = "./.github/actions/gotest"
-}
-
-action "Test coverage" {
-  needs = ["Run tests"]
-  uses = "./.github/actions/codecov"
-  args = "-f ${GITHUB_WORKSPACE}/coverage.txt"
+action "build" {
+  uses = "andrew-waters/actions/go/build@master"
 }
