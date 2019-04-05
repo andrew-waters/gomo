@@ -1,5 +1,6 @@
 package entities
 
+// File is a Moltin File - https://docs.moltin.com/advanced/files
 type File struct {
 	ID       string `json:"id"`
 	Type     string `json:"type"`

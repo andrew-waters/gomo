@@ -20,6 +20,7 @@ type Field struct {
 	Relationships FieldToFlowRelationship `json:"relationships,omitempty"`
 }
 
+// FieldToFlowRelationship is the container for flow relationship data
 type FieldToFlowRelationship struct {
 	Flow RelationshipData `json:"flow,omitempty"`
 }
