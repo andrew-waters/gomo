@@ -8,6 +8,7 @@ const (
 	fileType             = "file"
 	flowType             = "flow"
 	fieldType            = "field"
+	gatewayType          = "gateway"
 	productType          = "product"
 	settingsType         = "settings"
 	stockTransactionType = "stock-transaction"
