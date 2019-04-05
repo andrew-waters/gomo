@@ -69,18 +69,6 @@ func TestCustomEndpoint(t *testing.T) {
 
 }
 
-func TestNewClientWithCustomEndpoint(t *testing.T) {
-	endpoint := "https://yourdomain.com"
-	c := NewClientWithCustomEndpoint(
-		NewClientCredentials("abc", "def"),
-		endpoint,
-	)
-
-	if c.Endpoint != endpoint {
-		t.Errorf("Incorrect endpoint: %s (expected %s)", c.Endpoint, endpoint)
-	}
-}
-
 func TestClientGrantTypeImplicit(t *testing.T) {
 	client := NewClient(
 		NewImplicitCredentials(

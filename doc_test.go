@@ -75,14 +75,3 @@ func ExampleNewClient() {
 	)
 	log.Println(client.APIVersion)
 }
-
-func ExampleNewClientWithCustomEndpoint() {
-	client := gomo.NewClientWithCustomEndpoint(
-		gomo.NewClientCredentials(
-			"client_id",
-			"client_secret",
-		),
-		"https://alt.domain.tld",
-	)
-	log.Println(client.APIVersion)
-}
