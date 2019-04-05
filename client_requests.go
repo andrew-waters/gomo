@@ -68,6 +68,9 @@ func (c *Client) do(wrapper *wrapper) error {
 	}
 
 	err = json.Unmarshal(b, &wrapper.Response)
+	if err != nil {
+		return err
+	}
 
 	if len(wrapper.Response.Errors) > 0 {
 		return errors.New(wrapper.Response.Errors[0].Detail)
