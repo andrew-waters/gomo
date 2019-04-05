@@ -16,7 +16,7 @@ type Collection struct {
 	} `json:"relationships,omitempty"`
 }
 
-// CategoryIncludes is possible includes for a Category
+// CollectionIncludes is possible includes for a Collection
 type CollectionIncludes struct {
 	Products []Product `json:"products"`
 }

@@ -6,6 +6,7 @@ type Relationship struct {
 	ID   string `json:"id"`
 }
 
+// RelationshipData represents the data element of a relationship
 type RelationshipData struct {
 	Data interface{} `json:"data"`
 }
