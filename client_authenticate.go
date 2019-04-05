@@ -10,7 +10,7 @@ import (
 
 var errUnableToAuthenticate = errors.New("Unable to authenticate")
 
-// AuthResponse contains the repsonse from the auth call
+// AuthResponse contains the response from the auth call
 type authResponse struct {
 	Expires     int    `json:"expires"`
 	ExpiresIn   int    `json:"expires_in"`
