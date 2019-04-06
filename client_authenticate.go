@@ -36,6 +36,11 @@ func (c *Client) Authenticate() error {
 		return errUnableToAuthenticate
 	}
 
+	return c.extractAccessTokenFromResponse(r)
+}
+
+func (c *Client) extractAccessTokenFromResponse(r *http.Response) error {
+
 	defer r.Body.Close()
 
 	b, err := ioutil.ReadAll(r.Body)
