@@ -45,26 +45,10 @@ func (c *Client) do(wrapper *wrapper) error {
 		return err
 	}
 
-	wrapper.StatusCode = resp.StatusCode
+	return c.parseResponse(resp, wrapper)
 
-	defer resp.Body.Close()
-
-	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(b, &wrapper.Response)
-	if err != nil {
-		return err
-	}
-
-	if len(wrapper.Response.Errors) > 0 {
-		return errors.New(wrapper.Response.Errors[0].Detail)
-	}
-
-	return nil
 }
+
 func (c Client) buildRequest(method string, endpoint string, body []byte) (*http.Request, error) {
 	var err error
 
@@ -110,4 +94,27 @@ func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 	}
 
 	return resp, nil
+}
+
+func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
+
+	wrapper.StatusCode = resp.StatusCode
+
+	defer resp.Body.Close()
+
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(b, &wrapper.Response)
+	if err != nil {
+		return err
+	}
+
+	if len(wrapper.Response.Errors) > 0 {
+		return errors.New(wrapper.Response.Errors[0].Detail)
+	}
+
+	return nil
 }
