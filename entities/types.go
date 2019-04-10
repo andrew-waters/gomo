@@ -9,6 +9,7 @@ const (
 	flowType             = "flow"
 	fieldType            = "field"
 	gatewayType          = "gateway"
+	integrationType      = "integration"
 	productType          = "product"
 	settingsType         = "settings"
 	stockTransactionType = "stock-transaction"
