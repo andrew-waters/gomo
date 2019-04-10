@@ -16,7 +16,7 @@ go get github.com/andrew-waters/gomo
 
 Code documentation is available on [GoDoc](https://godoc.org/github.com/andrew-waters/gomo).
 
-A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki), but the demo below shows you how to create a client and get a product with a known ID:
+A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki), but the demo below shows you how to create a client and get some products:
 
 ```golang
 client := gomo.NewClient(
