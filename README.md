@@ -30,14 +30,13 @@ if err := client.Authenticate(); err != nil {
 	log.Fatal(err)
 }
 
-product := entities.Product{}
-_, err := client.Get(fmt.Sprintf("products/%s", "PRODUCT_ID"), &product)
-
+products := []entities.Product{}
+_, err := client.Get("products", &products)
 if err != nil {
-  log.Fatal(err)
+	log.Fatal(err)
 }
 
-log.Println("Product Name: %s", product.Name)
+log.Printf("Found %d products\n", len(products))
 ```
 
 
