@@ -16,7 +16,29 @@ go get github.com/andrew-waters/gomo
 
 Code documentation is available on [GoDoc](https://godoc.org/github.com/andrew-waters/gomo).
 
-A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki).
+A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki), but th ebelow shows you how to create a client and get a product with a known ID:
+
+```golang
+client := gomo.NewClient(
+	gomo.NewClientCredentials(
+		os.Getenv("CLIENT_ID"),
+		os.Getenv("CLIENT_SECRET"),
+	),
+)
+
+if err := client.Authenticate(); err != nil {
+	log.Fatal(err)
+}
+
+product := entities.Product{}
+_, err := client.Get(fmt.Sprintf("products/%s", "PRODUCT_ID"), &product)
+
+if err != nil {
+  log.Fatal(err)
+}
+
+log.Println("Product Name: %s", product.Name)
+```
 
 
 ## Testing
