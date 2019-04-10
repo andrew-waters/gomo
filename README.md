@@ -45,7 +45,7 @@ log.Printf("Found %d products\n", len(products))
 In order to fully test the package, you will need a Moltin account to add your credentials to an environment file:
 
 ```bash
-cp example.env .env
+cp .env.example .env
 ```
 
 Add your credentials and run:
