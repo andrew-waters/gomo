@@ -2,7 +2,7 @@ package gomo
 
 import "testing"
 
-var successfulUpdateTransactionTests = []struct {
+var errorTests = []struct {
 	status   int
 	title    string
 	detail   string
@@ -16,7 +16,7 @@ var successfulUpdateTransactionTests = []struct {
 
 func TestAPIErrorString(t *testing.T) {
 
-	for _, test := range successfulUpdateTransactionTests {
+	for _, test := range errorTests {
 
 		e := APIError{
 			Status: test.status,
