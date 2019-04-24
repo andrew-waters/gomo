@@ -51,6 +51,11 @@ func (c *Client) CustomEndpoint(e string) {
 	c.Endpoint = e
 }
 
+// CustomHTTPClient overrides the default http.Client that the client uses
+func (c *Client) CustomHTTPClient(httpClient *http.Client) {
+	c.httpClient = httpClient
+}
+
 // EnableDebug logs debugging info from the API calls
 func (c *Client) EnableDebug() {
 	c.Debug = true
