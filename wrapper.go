@@ -24,33 +24,38 @@ type response struct {
 	Errors   []APIError  `json:"errors"`
 }
 
-// newAPIWrapper creates a new wrapper for this call
-func newWrapper(method string, endpoint string, resources ...interface{}) wrapper {
+func Resource(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Body = target
+		w.Response.Data = target
 
-	var targetResource interface{}
-	var targetIncludes interface{}
-
-	for k, resource := range resources {
-		switch k {
-		case 0:
-			targetResource = resource
-		case 1:
-			targetIncludes = resource
+		// set the resource type if the entity has the SetType method
+		if resource, ok := target.(interface{ SetType() }); ok {
+			resource.SetType()
 		}
 	}
+}
 
-	// set the resource type if the entity has the SetType method
-	if targetResource, ok := targetResource.(interface{ SetType() }); ok {
-		targetResource.SetType()
+func Included(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Included = target
 	}
+}
 
-	return wrapper{
+func Meta(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Meta = target
+	}
+}
+
+// newWrapper creates a new wrapper for this call
+func newWrapper(method string, endpoint string, resources ...func(*wrapper)) wrapper {
+	wrapper := wrapper{
 		Method:   strings.ToUpper(method),
 		Endpoint: endpoint,
-		Body:     targetResource,
-		Response: response{
-			Data:     targetResource,
-			Included: targetIncludes,
-		},
 	}
+	for _, resource := range resources {
+		resource(&wrapper)
+	}
+	return wrapper
 }

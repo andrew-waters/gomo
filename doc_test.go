@@ -27,7 +27,7 @@ func Example() {
 	}
 
 	// send the create request
-	wrapper, err := client.Post("products", &product)
+	wrapper, err := client.Post("products", gomo.Resource(&product))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +39,7 @@ func Example() {
 	product.Name = "Updated Product"
 
 	// send the update request
-	wrapper, err = client.Put(fmt.Sprintf("products/%s", product.ID), &product)
+	wrapper, err = client.Put(fmt.Sprintf("products/%s", product.ID), gomo.Resource(&product))
 	if err != nil {
 		log.Fatal(err)
 	}

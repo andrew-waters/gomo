@@ -10,26 +10,26 @@ import (
 )
 
 // Post makes a POST request to the API
-func (c *Client) Post(endpoint string, resource interface{}) (wrapper, error) {
-	wrapper := newWrapper("post", endpoint, resource)
+func (c *Client) Post(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("post", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Get makes a GET request to the API
-func (c *Client) Get(endpoint string, resource ...interface{}) (wrapper, error) {
+func (c *Client) Get(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
 	wrapper := newWrapper("get", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Delete makes a DELETE request to the API
-func (c *Client) Delete(endpoint string) (wrapper, error) {
-	wrapper := newWrapper("delete", endpoint)
+func (c *Client) Delete(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("delete", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Put makes a PUT request to the API
-func (c *Client) Put(endpoint string, resource interface{}) (wrapper, error) {
-	wrapper := newWrapper("put", endpoint, resource)
+func (c *Client) Put(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("put", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
