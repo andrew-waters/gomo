@@ -1,22 +1,22 @@
 # gomo - a Go Client for the Moltin API
 
-[![GoDoc](https://godoc.org/github.com/andrew-waters/gomo?status.svg)](https://godoc.org/github.com/andrew-waters/gomo)
-[![Report Card](https://goreportcard.com/badge/github.com/andrew-waters/gomo)](https://goreportcard.com/report/github.com/andrew-waters/gomo)
-[![Maintainability](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/maintainability)](https://codeclimate.com/github/andrew-waters/gomo/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/test_coverage)](https://codeclimate.com/github/andrew-waters/gomo/test_coverage)
+[![GoDoc](https://godoc.org/github.com/moltin/gomo?status.svg)](https://godoc.org/github.com/moltin/gomo)
+[![Report Card](https://goreportcard.com/badge/github.com/moltin/gomo)](https://goreportcard.com/report/github.com/moltin/gomo)
+[![Maintainability](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/maintainability)](https://codeclimate.com/github/moltin/gomo/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/48415c0b8f48979b40a9/test_coverage)](https://codeclimate.com/github/moltin/gomo/test_coverage)
 
 A Golang client for the [moltin](https://moltin.com) API.
 
 ```bash
-go get github.com/andrew-waters/gomo
+go get github.com/moltin/gomo
 ```
 
 
 ## Documentation
 
-Code documentation is available on [GoDoc](https://godoc.org/github.com/andrew-waters/gomo).
+Code documentation is available on [GoDoc](https://godoc.org/github.com/moltin/gomo).
 
-A guide is avilable on [the wiki](https://github.com/andrew-waters/gomo/wiki), but the demo below shows you how to create a client and get some products:
+A guide is avilable on [the wiki](https://github.com/moltin/gomo/wiki), but the demo below shows you how to create a client and get some products:
 
 ```golang
 client := gomo.NewClient(

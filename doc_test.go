@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/andrew-waters/gomo"
-	"github.com/andrew-waters/gomo/entities"
+	"github.com/moltin/gomo"
+	"github.com/moltin/gomo/entities"
 )
 
 func Example() {
