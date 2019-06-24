@@ -3,6 +3,7 @@ package gomo
 import (
 	"log"
 	"net/http"
+	"os"
 )
 
 const (
@@ -30,15 +31,19 @@ type Client struct {
 }
 
 // NewClient creates a new client for you to make requests with
-func NewClient(c credentials) Client {
-	return Client{
-		credentials: c,
+func NewClient(options ...func(*Client)) Client {
+	client := Client{
+		credentials: defaultCredentials(),
 		APIVersion:  defaultAPIVersion,
 		Endpoint:    defaultEndpoint,
 		Debug:       false,
 		httpClient:  &http.Client{},
 		Logger:      defaultLogger,
 	}
+	for _, option := range options {
+		option(&client)
+	}
+	return client
 }
 
 // GrantType returns the string value of the current crednetials grant type
@@ -71,5 +76,12 @@ func (c *Client) Log(msgs ...interface{}) {
 	for _, msg := range msgs {
 		c.Logs = append(c.Logs, msg)
 		c.Logger(c, msg)
+	}
+}
+
+func defaultCredentials() credentials {
+	return clientCredentials{
+		clientID:     os.Getenv("CLIENT_ID"),
+		clientSecret: os.Getenv("CLIENT_SECRET"),
 	}
 }
