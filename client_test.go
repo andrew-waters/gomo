@@ -3,24 +3,12 @@ package gomo
 import (
 	"bytes"
 	"log"
-	"net/http"
 	"strings"
 	"testing"
 )
 
-func testClient() Client {
-	return Client{
-		credentials: NewClientCredentials("abc", "def"),
-		APIVersion:  defaultAPIVersion,
-		Endpoint:    defaultEndpoint,
-		Debug:       false,
-		httpClient:  &http.Client{},
-		Logger:      defaultLogger,
-	}
-}
-
 func TestClientDefaults(t *testing.T) {
-	c := testClient()
+	c := NewClient()
 
 	// test the default endpoint
 	expectedEndpoint := "https://api.moltin.com"
@@ -41,7 +29,7 @@ func TestClientDefaults(t *testing.T) {
 }
 
 func TestClientDebug(t *testing.T) {
-	c := testClient()
+	c := NewClient()
 
 	// test enabling debug
 	c.EnableDebug()
@@ -59,9 +47,9 @@ func TestClientDebug(t *testing.T) {
 func TestCustomEndpoint(t *testing.T) {
 	endpoint := "https://yourdomain.com"
 
-	c := testClient()
-
-	c.CustomEndpoint(endpoint)
+	c := NewClient(
+		Endpoint(endpoint),
+	)
 
 	if c.Endpoint != endpoint {
 		t.Errorf("Incorrect debug val: %s (expected %s)", c.Endpoint, endpoint)
@@ -71,7 +59,7 @@ func TestCustomEndpoint(t *testing.T) {
 
 func TestClientGrantTypeImplicit(t *testing.T) {
 	client := NewClient(
-		NewImplicitCredentials(
+		ImplicitCredentials(
 			"abc",
 		),
 	)
@@ -83,7 +71,7 @@ func TestClientGrantTypeImplicit(t *testing.T) {
 
 func TestClientGrantTypeClientCredentials(t *testing.T) {
 	client := NewClient(
-		NewClientCredentials(
+		ClientCredentials(
 			"abc",
 			"def",
 		),
@@ -95,18 +83,20 @@ func TestClientGrantTypeClientCredentials(t *testing.T) {
 }
 
 func TestCustomLogger(t *testing.T) {
+	logHit := false
 	client := NewClient(
-		NewClientCredentials(
+		ClientCredentials(
 			"abc",
 			"def",
+		),
+		Logger(
+			func(c *Client, msg interface{}) {
+				logHit = true
+			},
 		),
 	)
 	client.EnableDebug()
 
-	logHit := false
-	client.CustomLogger(func(c *Client, msg interface{}) {
-		logHit = true
-	})
 	err := client.Authenticate()
 	client.Log(err)
 
@@ -117,7 +107,7 @@ func TestCustomLogger(t *testing.T) {
 
 func TestDefaultLogger(t *testing.T) {
 	client := NewClient(
-		NewClientCredentials(
+		ClientCredentials(
 			"abc",
 			"def",
 		),

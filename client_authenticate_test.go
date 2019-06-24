@@ -1,26 +1,23 @@
 package gomo
 
 import (
-	"log"
 	"os"
 	"testing"
 )
 
 func TestClientAuthenticatesWithClientCredentials(t *testing.T) {
-	clientID := os.Getenv("CLIENT_ID")
-	clientSecret := os.Getenv("CLIENT_SECRET")
+	clientID := os.Getenv("MOLTIN_CLIENT_ID")
+	clientSecret := os.Getenv("MOLTIN_CLIENT_SECRET")
 
 	if clientID == "" {
-		log.Println("No client id, skipping test")
-		return
+		t.Skip("No client id, skipping test")
 	}
 	if clientSecret == "" {
-		log.Println("No client secret, skipping test")
-		return
+		t.Skip("No client secret, skipping test")
 	}
 
 	client := NewClient(
-		NewClientCredentials(
+		ClientCredentials(
 			clientID,
 			clientSecret,
 		),
@@ -35,12 +32,11 @@ func TestClientAuthenticatesImplicitly(t *testing.T) {
 	clientID := os.Getenv("CLIENT_ID")
 
 	if clientID == "" {
-		log.Println("No client id, skipping test")
-		return
+		t.Skip("No client id, skipping test")
 	}
 
 	client := NewClient(
-		NewImplicitCredentials(
+		ImplicitCredentials(
 			clientID,
 		),
 	)

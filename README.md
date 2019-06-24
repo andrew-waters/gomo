@@ -20,9 +20,9 @@ A guide is avilable on [the wiki](https://github.com/moltin/gomo/wiki), but the 
 
 ```golang
 client := gomo.NewClient(
-	gomo.NewClientCredentials(
-		os.Getenv("CLIENT_ID"),
-		os.Getenv("CLIENT_SECRET"),
+	gomo.ClientCredentials(
+		os.Getenv("MOLTIN_CLIENT_ID"),
+		os.Getenv("MOLTIN_CLIENT_SECRET"),
 	),
 )
 

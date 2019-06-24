@@ -11,7 +11,7 @@ import (
 func Example() {
 	// create a new client with clinet credentials
 	client := gomo.NewClient(
-		gomo.NewClientCredentials(
+		gomo.ClientCredentials(
 			"client_id",
 			"client_secret",
 		),
@@ -51,16 +51,16 @@ func Example() {
 	}
 }
 
-func ExampleNewClientCredentials() {
-	creds := gomo.NewClientCredentials(
+func ExampleClientCredentials() {
+	creds := gomo.ClientCredentials(
 		"client_id",
 		"client_secret",
 	)
 	gomo.NewClient(creds)
 }
 
-func ExampleNewImplicitCredentials() {
-	creds := gomo.NewImplicitCredentials(
+func ExampleImplicitCredentials() {
+	creds := gomo.ImplicitCredentials(
 		"client_id",
 	)
 	gomo.NewClient(creds)
@@ -68,7 +68,7 @@ func ExampleNewImplicitCredentials() {
 
 func ExampleNewClient() {
 	client := gomo.NewClient(
-		gomo.NewClientCredentials(
+		gomo.ClientCredentials(
 			"client_id",
 			"client_secret",
 		),
