@@ -10,6 +10,7 @@ const (
 	fileType             = "file"
 	flowType             = "flow"
 	fieldType            = "field"
+	jobType              = "job"
 	variationType        = "product-variation"
 	optionType           = "option"
 	modifierType         = "modifier"
