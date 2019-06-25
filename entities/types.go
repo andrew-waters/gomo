@@ -1,6 +1,7 @@
 package entities
 
 const (
+	addressType          = "address"
 	brandType            = "brand"
 	categoryType         = "category"
 	collectionType       = "collection"
