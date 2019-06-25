@@ -8,9 +8,17 @@ type File struct {
 	Public   bool   `json:"public"`
 	MimeType string `json:"mime_type"`
 	FileSize int    `json:"file_size"`
-	Link     struct {
+	Meta     struct {
+		Dimensions struct {
+			Width  int32 `json:"width"`
+			Height int32 `json:"height"`
+		} `json:"dimensions"`
+		Timestamps Timestamps `json:"timestamps"`
+	}
+	Link struct {
 		Href string `json:"href"`
 	} `json:"link"`
+	Links Links `json:"links"`
 }
 
 // SetType sets the resource type on the struct
