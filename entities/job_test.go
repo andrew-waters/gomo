@@ -2,7 +2,7 @@ package entities
 
 import "testing"
 
-func (j *Job) TestJobType() {
+func TestJobType(t *testing.T) {
 	j := Job{}
 	j.SetType()
 
