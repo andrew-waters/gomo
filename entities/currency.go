@@ -12,6 +12,7 @@ type Currency struct {
 	DecimalPlaces     int64   `json:"decimal_places"`
 	Default           bool    `json:"default"`
 	Enabled           bool    `json:"enabled"`
+	Links             Links   `json:"links"`
 	Meta              struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	}
