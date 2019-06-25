@@ -12,11 +12,14 @@ type Product struct {
 	Status        string         `json:"status"`
 	CommodityType string         `json:"commodity_type"`
 	Price         []ProductPrice `json:"price"`
-	Meta          struct {
-		DisplayPrice DisplayPriceWrapper `json:"display_price"`
-		Timestamps   Timestamps          `json:"timestamps,omitempty"`
-		Stock        ProductStock        `json:"stock"`
-	} `json:"meta,omitempty"`
+	Meta          ProductMeta    `json:"meta,omitempty"`
+}
+
+// ProductMeta holds the meta for a Product
+type ProductMeta struct {
+	DisplayPrice DisplayPriceWrapper `json:"display_price,omitempty"`
+	Timestamps   Timestamps          `json:"timestamps,omitempty"`
+	Stock        ProductStock        `json:"stock,omitempty"`
 }
 
 // ProductStock is a stock object for a Products meta

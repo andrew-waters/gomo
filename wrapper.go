@@ -19,10 +19,10 @@ type wrapper struct {
 // APIResponse contains the response data to the call
 type response struct {
 	Data     interface{} `json:"data"`
-	Meta     interface{} `json:"meta"`
-	Included interface{} `json:"included"`
-	Links    interface{} `json:"links"`
-	Errors   []APIError  `json:"errors"`
+	Meta     interface{} `json:"meta,omitempty"`
+	Included interface{} `json:"included,omitempty"`
+	Links    interface{} `json:"links,omitempty"`
+	Errors   []APIError  `json:"errors,omitempty"`
 }
 
 // Data sets the target for a responses data resource
