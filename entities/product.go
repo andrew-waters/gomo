@@ -13,10 +13,27 @@ type Product struct {
 	CommodityType string         `json:"commodity_type"`
 	Price         []ProductPrice `json:"price"`
 	Meta          struct {
-		DisplayPrice DisplayPriceWrapper `json:"display_price"`
-		Timestamps   Timestamps          `json:"timestamps,omitempty"`
-		Stock        ProductStock        `json:"stock"`
+		DisplayPrice    DisplayPriceWrapper `json:"display_price"`
+		Timestamps      Timestamps          `json:"timestamps,omitempty"`
+		Stock           ProductStock        `json:"stock"`
+		Variations      []ProductVariation  `json:"variations,omitempty"`
+		VariationMatrix interface{}         `json:"variation_matrix"`
 	} `json:"meta,omitempty"`
+	Relationships interface{}     `json:"relationships,omitempty"`
+	Included      ProductIncludes `json:"included,omitempty"`
+}
+
+// ProductVariation is a variation object for a Products Variations meta
+type ProductVariation struct {
+	ID      string                    `json:"id"`
+	Name    string                    `json:"name"`
+	Options []ProductVariationOptions `json:"options"`
+}
+
+// ProductVariationOptions is a options object for a Products ProductVariation meta
+type ProductVariationOptions struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 // ProductStock is a stock object for a Products meta
