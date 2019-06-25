@@ -11,6 +11,7 @@ type Field struct {
 	ValidationRules []interface{} `json:"validation_rules,omitempty"`
 	Enabled         bool          `json:"enabled"`
 	Required        bool          `json:"required"`
+	Order           int32         `json:"order"`
 	Unique          bool          `json:"unique"`
 	Default         interface{}   `json:"default,omitempty"`
 	OmitNull        bool          `json:"omit_null,omitempty"`
