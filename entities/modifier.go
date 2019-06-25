@@ -10,5 +10,5 @@ type Modifier struct {
 
 // SetType sets the resource type on the struct
 func (m *Modifier) SetType() {
-	m.Type = "modifier"
+	m.Type = modifierType
 }

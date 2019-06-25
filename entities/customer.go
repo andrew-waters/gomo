@@ -11,5 +11,5 @@ type Customer struct {
 
 // SetType sets the resource type on the struct
 func (c *Customer) SetType() {
-	c.Type = "customer"
+	c.Type = customerType
 }

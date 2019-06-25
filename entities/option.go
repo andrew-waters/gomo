@@ -11,5 +11,5 @@ type Option struct {
 
 // SetType sets the resource type on the struct
 func (o *Option) SetType() {
-	o.Type = "option"
+	o.Type = optionType
 }

@@ -11,5 +11,5 @@ type Inventory struct {
 
 // SetType sets the resource type on the struct
 func (i *Inventory) SetType() {
-	i.Type = "inventory"
+	i.Type = inventoryType
 }
