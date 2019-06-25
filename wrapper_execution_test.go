@@ -3,26 +3,22 @@ package gomo
 import (
 	"testing"
 	"time"
-
-	"github.com/bouk/monkey"
 )
 
 func TestWrapperExecutionTimes(t *testing.T) {
-	start := time.Date(1985, time.October, 26, 01, 21, 0, 0, time.UTC)
-	patch := monkey.Patch(time.Now, func() time.Time {
-		return start
-	})
-
 	e := APIExecution{}
-	e.Start()
-	patch.Unpatch()
+	c := make(chan time.Time, 1)
+	e.clock = func() time.Time {
+		return <-c
+	}
 
+	start := time.Date(1985, time.October, 26, 01, 21, 0, 0, time.UTC)
 	end := time.Date(1985, time.October, 26, 01, 22, 0, 0, time.UTC)
-	patch = monkey.Patch(time.Now, func() time.Time {
-		return end
-	})
+
+	c <- start
+	e.Start()
+	c <- end
 	e.End()
-	patch.Unpatch()
 
 	if e.StartTime != start {
 		t.Errorf("Start time did return correct start time")
