@@ -3,33 +3,32 @@ package gomo
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
 // Post makes a POST request to the API
-func (c *Client) Post(endpoint string, resource interface{}) (wrapper, error) {
-	wrapper := newWrapper("post", endpoint, resource)
+func (c *Client) Post(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("post", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Get makes a GET request to the API
-func (c *Client) Get(endpoint string, resource ...interface{}) (wrapper, error) {
+func (c *Client) Get(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
 	wrapper := newWrapper("get", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Delete makes a DELETE request to the API
-func (c *Client) Delete(endpoint string) (wrapper, error) {
-	wrapper := newWrapper("delete", endpoint)
+func (c *Client) Delete(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("delete", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Put makes a PUT request to the API
-func (c *Client) Put(endpoint string, resource interface{}) (wrapper, error) {
-	wrapper := newWrapper("put", endpoint, resource)
+func (c *Client) Put(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+	wrapper := newWrapper("put", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
@@ -42,7 +41,7 @@ func (c *Client) do(wrapper *wrapper) error {
 
 	resp, err := c.makeRequest(wrapper)
 	if err != nil {
-		return err
+		return fmt.Errorf("request failed: %v", err)
 	}
 
 	return c.parseResponse(resp, wrapper)
@@ -104,16 +103,17 @@ func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
 
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read request body: %v", err)
 	}
 
 	err = json.Unmarshal(b, &wrapper.Response)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal response %v", err)
 	}
 
 	if len(wrapper.Response.Errors) > 0 {
-		return errors.New(wrapper.Response.Errors[0].Detail)
+		e := wrapper.Response.Errors[0]
+		return fmt.Errorf("%s: %s", e.Title, e.Detail)
 	}
 
 	return nil
