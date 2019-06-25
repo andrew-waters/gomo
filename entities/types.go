@@ -7,6 +7,7 @@ const (
 	collectionType       = "collection"
 	currencyType         = "currency"
 	customerType         = "customer"
+	eventType            = "event"
 	fileType             = "file"
 	flowType             = "flow"
 	fieldType            = "field"
