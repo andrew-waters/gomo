@@ -11,13 +11,17 @@ type Order struct {
 	ShippingAddress Address       `json:"shipping_address"`
 	BillingAddress  Address       `json:"billing_address"`
 	Links           Links         `json:"links"`
-	Meta            struct {
-		DisplayPrice DisplayPriceWrapper `json:"display_price"`
-		Timestamps   Timestamps          `json:"timestamps,omitempty"`
-	} `json:"meta,omitempty"`
-	Relationships interface{} `json:"relationships"`
+	Meta            OrderMeta     `json:"meta,omitempty"`
+	Relationships   interface{}   `json:"relationships"`
 }
 
+// OrderMeta represents the meta object for a Moltin order
+type OrderMeta struct {
+	DisplayPrice DisplayPriceWrapper `json:"display_price"`
+	Timestamps   Timestamps          `json:"timestamps,omitempty"`
+}
+
+// OrderCustomer represents a Moltin customer object for a Moltin order (can be ID or Name and Email)
 type OrderCustomer struct {
 	ID    string `json:"id,omitempty"`
 	Name  string `json:"name,omitempty"`
