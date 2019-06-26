@@ -6,6 +6,7 @@ type Settings struct {
 	PageLength          int      `json:"page_length"`
 	ListChildProducts   bool     `json:"list_child_products"`
 	AdditionalLanguages []string `json:"additional_languages"`
+	CalculationMethod   string   `json:"calculation_method,omitempty"`
 }
 
 // SetType sets the resource type on the struct

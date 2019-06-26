@@ -242,11 +242,13 @@ func TestGetProductWithFlows(t *testing.T) {
 					WithTax: entities.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
-						Formatted: "$475.00"},
+						Formatted: "$475.00",
+					},
 					WithoutTax: entities.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
-						Formatted: "$475.00"},
+						Formatted: "$475.00",
+					},
 				},
 				Timestamps: entities.Timestamps{
 					CreatedAt: "2017-06-19T14:58:42+00:00",
@@ -255,6 +257,67 @@ func TestGetProductWithFlows(t *testing.T) {
 					Level:        500,
 					Availability: "in-stock",
 				},
+				Variations:      []entities.ProductVariation(nil),
+				VariationMatrix: []interface{}{},
+			},
+			Relationships: map[string]interface{}{
+				"categories": map[string]interface{}{
+					"data": []interface{}{
+						map[string]interface{}{
+							"id":   "a636c261-0259-4975-ac8e-77246ec9cfe0",
+							"type": "category",
+						},
+					},
+				},
+				"files": map[string]interface{}{
+					"data": []interface{}{
+						map[string]interface{}{
+							"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							"type": "file",
+						},
+					},
+				},
+				"main_image": map[string]interface{}{
+					"data": map[string]interface{}{
+						"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+						"type": "main_image",
+					},
+				},
+			},
+			Included: entities.ProductIncludes{
+				Brands:      []entities.Brand(nil),
+				Categories:  []entities.Category(nil),
+				Collections: []entities.Collection(nil),
+				Files:       []entities.File(nil),
+				MainImage: entities.File{
+					ID:       "",
+					Type:     "",
+					FileName: "",
+					Public:   false,
+					MimeType: "",
+					FileSize: 0,
+					Meta: entities.FileMeta{
+						Dimensions: struct {
+							Width  int32 "json:\"width\""
+							Height int32 "json:\"height\""
+						}{
+							Width:  0,
+							Height: 0,
+						},
+						Timestamps: entities.Timestamps{
+							CreatedAt: "",
+						},
+					},
+					Link: struct {
+						Href string "json:\"href\""
+					}{
+						Href: "",
+					},
+					Links: entities.Links{
+						Self: "",
+					},
+				},
+				MainImages: []entities.File(nil),
 			},
 		},
 		Material:         "",
@@ -274,26 +337,24 @@ func TestGetProductWithFlows(t *testing.T) {
 func TestPostProductWithFlows(t *testing.T) {
 	test := testServer{
 		expectMethod: "POST",
-		// No idea why meta appears in the body here given there
-		// are "omitempty"s in all the right places:
 		expectBody: `
 {
     "data": {
-        "type": "product",
-        "name": "Crown",
-        "slug": "crown",
-        "sku": "CWLP100BLK",
-        "manage_stock": true,
-        "description": "Abstract, sculptural, refined and edgy with a modern twist. Its symmetrical, spoked structure generates a clever geometric presence, which works well in a contemporary environment.",
-        "price": [
-            {
-                "amount": 47500,
-                "currency": "USD",
-                "includes_tax": true
-            }
-        ],
-        "status": "live",
-        "commodity_type": "physical",
+	"type": "product",
+	"name": "Crown",
+	"slug": "crown",
+	"sku": "CWLP100BLK",
+	"description": "Abstract, sculptural, refined and edgy with a modern twist. Its symmetrical, spoked structure generates a clever geometric presence, which works well in a contemporary environment.",
+	"manage_stock": true,
+	"status": "live",
+	"commodity_type": "physical",
+	"price": [
+	    {
+		"amount": 47500,
+		"currency": "USD",
+		"includes_tax": true
+	    }
+	],
 	"meta": {
 	    "display_price": {
 		"with_tax": {
@@ -311,10 +372,38 @@ func TestPostProductWithFlows(t *testing.T) {
 	    "stock": {
 		"level": 0,
 		"availability": ""
-	    }
+	    },
+	    "variation_matrix": null
 	},
-        "background_colour": "#d9d9d9",
-        "finish": "test"
+	"included": {
+	    "brands": null,
+	    "categories": null,
+	    "collections": null,
+	    "files": null,
+	    "main_image": {
+		"type": "",
+		"file_name": "",
+		"public": false,
+		"mime_type": "",
+		"file_size": 0,
+		"meta": {
+		    "dimensions": {
+			"width": 0,
+			"height": 0
+		    },
+		    "timestamps": {}
+		},
+		"link": {
+		    "href": ""
+		},
+		"links": {
+		    "self": ""
+		}
+	    },
+	    "main_images": null
+	},
+	"background_colour": "#d9d9d9",
+	"finish": "test"
     }
 }
 		`,
@@ -466,11 +555,13 @@ func TestPostProductWithFlows(t *testing.T) {
 					WithTax: entities.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
-						Formatted: "$475.00"},
+						Formatted: "$475.00",
+					},
 					WithoutTax: entities.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
-						Formatted: "$475.00"},
+						Formatted: "$475.00",
+					},
 				},
 				Timestamps: entities.Timestamps{
 					CreatedAt: "2017-06-19T14:58:42+00:00",
@@ -479,6 +570,67 @@ func TestPostProductWithFlows(t *testing.T) {
 					Level:        500,
 					Availability: "in-stock",
 				},
+				Variations:      []entities.ProductVariation(nil),
+				VariationMatrix: []interface{}{},
+			},
+			Relationships: map[string]interface{}{
+				"categories": map[string]interface{}{
+					"data": []interface{}{
+						map[string]interface{}{
+							"id":   "a636c261-0259-4975-ac8e-77246ec9cfe0",
+							"type": "category",
+						},
+					},
+				},
+				"files": map[string]interface{}{
+					"data": []interface{}{
+						map[string]interface{}{
+							"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							"type": "file",
+						},
+					},
+				},
+				"main_image": map[string]interface{}{
+					"data": map[string]interface{}{
+						"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+						"type": "main_image",
+					},
+				},
+			},
+			Included: entities.ProductIncludes{
+				Brands:      []entities.Brand(nil),
+				Categories:  []entities.Category(nil),
+				Collections: []entities.Collection(nil),
+				Files:       []entities.File(nil),
+				MainImage: entities.File{
+					ID:       "",
+					Type:     "",
+					FileName: "",
+					Public:   false,
+					MimeType: "",
+					FileSize: 0,
+					Meta: entities.FileMeta{
+						Dimensions: struct {
+							Width  int32 "json:\"width\""
+							Height int32 "json:\"height\""
+						}{
+							Width:  0,
+							Height: 0,
+						},
+						Timestamps: entities.Timestamps{
+							CreatedAt: "",
+						},
+					},
+					Link: struct {
+						Href string "json:\"href\""
+					}{
+						Href: "",
+					},
+					Links: entities.Links{
+						Self: "",
+					},
+				},
+				MainImages: []entities.File(nil),
 			},
 		},
 		Material:         "",
@@ -644,7 +796,8 @@ func TestPutProduct(t *testing.T) {
 				WithTax: entities.DisplayPrice{
 					Amount:    7499,
 					Currency:  "USD",
-					Formatted: "$74.99"},
+					Formatted: "$74.99",
+				},
 				WithoutTax: entities.DisplayPrice{
 					Amount:    7499,
 					Currency:  "USD",
@@ -658,6 +811,61 @@ func TestPutProduct(t *testing.T) {
 				Level:        0,
 				Availability: "out-stock",
 			},
+			Variations:      []entities.ProductVariation(nil),
+			VariationMatrix: interface{}(nil),
+		},
+		Relationships: map[string]interface{}{
+			"categories": map[string]interface{}{
+				"data": []interface{}{
+					map[string]interface{}{
+						"id":   "3acf1815-ef09-44df-a6d3-e3e702663524",
+						"type": "category",
+					},
+				},
+			},
+			"collections": map[string]interface{}{
+				"data": []interface{}{
+					map[string]interface{}{
+						"id":   "10229491-7dbb-424d-be08-80c5735795cc",
+						"type": "collection",
+					},
+				},
+			},
+		},
+		Included: entities.ProductIncludes{
+			Brands:      []entities.Brand(nil),
+			Categories:  []entities.Category(nil),
+			Collections: []entities.Collection(nil),
+			Files:       []entities.File(nil),
+			MainImage: entities.File{
+				ID:       "",
+				Type:     "",
+				FileName: "",
+				Public:   false,
+				MimeType: "",
+				FileSize: 0,
+				Meta: entities.FileMeta{
+					Dimensions: struct {
+						Width  int32 "json:\"width\""
+						Height int32 "json:\"height\""
+					}{
+						Width:  0,
+						Height: 0,
+					},
+					Timestamps: entities.Timestamps{
+						CreatedAt: "",
+					},
+				},
+				Link: struct {
+					Href string "json:\"href\""
+				}{
+					Href: "",
+				},
+				Links: entities.Links{
+					Self: "",
+				},
+			},
+			MainImages: []entities.File(nil),
 		},
 	}
 	if !reflect.DeepEqual(product, expected) {

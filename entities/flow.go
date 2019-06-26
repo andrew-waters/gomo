@@ -10,7 +10,7 @@ type Flow struct {
 	Enabled     bool   `json:"enabled"`
 	Meta        struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
-	}
+	} `json:"meta,omitempty"`
 	Relationships struct {
 		Fields []Field `json:"fields,omitempty"`
 	} `json:"relationships,omitempty"`
