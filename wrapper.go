@@ -66,7 +66,7 @@ func Links(target interface{}) func(*wrapper) {
 }
 
 // newWrapper creates a new wrapper for this call
-func newWrapper(method string, endpoint string, resources ...func(*wrapper)) wrapper {
+func newWrapper(method string, endpoint string, resources ...RequestResource) wrapper {
 	wrapper := wrapper{
 		Method:   strings.ToUpper(method),
 		Endpoint: endpoint,
