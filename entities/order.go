@@ -25,6 +25,6 @@ type OrderCustomer struct {
 }
 
 // SetType sets the resource type on the struct
-func (o *Event) SetType() {
+func (o *Order) SetType() {
 	o.Type = orderType
 }
