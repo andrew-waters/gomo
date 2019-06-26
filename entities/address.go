@@ -7,8 +7,8 @@ type Address struct {
 	FirstName    string `json:"first_name"`
 	LastName     string `json:"last_name"`
 	Name         string `json:"name"`
-	PhoneNumber  int32  `json:"phone_number"`
-	Instructions string `json:"instructions"`
+	PhoneNumber  int32  `json:"phone_number,omitempty"`
+	Instructions string `json:"instructions,omitempty"`
 	CompanyName  string `json:"company_name"`
 	Line1        string `json:"line_1"`
 	Line2        string `json:"line_2"`
