@@ -20,6 +20,7 @@ const (
 	inventoryType        = "inventory"
 	integrationType      = "integration"
 	productType          = "product"
+	transactionType      = "transaction"
 	settingsType         = "settings"
 	stockTransactionType = "stock-transaction"
 )
