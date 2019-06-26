@@ -3,6 +3,7 @@ package entities
 const (
 	addressType          = "address"
 	brandType            = "brand"
+	cartType             = "cart"
 	categoryType         = "category"
 	collectionType       = "collection"
 	currencyType         = "currency"
