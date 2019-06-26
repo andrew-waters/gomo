@@ -1,5 +1,6 @@
 package entities
 
+// Event represents a Moltin event (not an event payload): https://docs.moltin.com/api/advanced/events
 type Event struct {
 	ID              string   `json:"id,omitempty"`
 	Type            string   `json:"type"`
@@ -14,6 +15,7 @@ type Event struct {
 	} `json:"configuration"`
 }
 
+// SetType sets the resource type on the struct
 func (e *Event) SetType() {
 	e.Type = eventType
 }
