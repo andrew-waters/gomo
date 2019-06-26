@@ -14,6 +14,7 @@ const (
 	jobType              = "job"
 	variationType        = "product-variation"
 	optionType           = "option"
+	orderType            = "order"
 	modifierType         = "modifier"
 	gatewayType          = "gateway"
 	inventoryType        = "inventory"
