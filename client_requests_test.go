@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/moltin/gomo"
-	"github.com/moltin/gomo/entities"
+	"github.com/moltin/gomo/core"
 )
 
 type testServer struct {
@@ -198,7 +198,7 @@ func TestGetProductWithFlows(t *testing.T) {
 	defer done()
 
 	type MyProduct struct {
-		entities.Product
+		core.Product
 		Material         string `json:"material"`
 		MaxWatt          int    `json:"max_watt"`
 		BulbQty          int    `json:"bulb_qty"`
@@ -220,7 +220,7 @@ func TestGetProductWithFlows(t *testing.T) {
 		t.Fatal("server not called")
 	}
 	expected := MyProduct{
-		Product: entities.Product{
+		Product: core.Product{
 			ID:            "9eda5ba0-4f4a-4074-8547-ccb05d1b5981",
 			Type:          "product",
 			Name:          "Crown",
@@ -230,34 +230,34 @@ func TestGetProductWithFlows(t *testing.T) {
 			ManageStock:   true,
 			Status:        "live",
 			CommodityType: "physical",
-			Price: []entities.ProductPrice{
-				entities.ProductPrice{
+			Price: []core.ProductPrice{
+				core.ProductPrice{
 					Amount:      47500,
 					Currency:    "USD",
 					IncludesTax: true,
 				},
 			},
-			Meta: entities.ProductMeta{
-				DisplayPrice: entities.DisplayPriceWrapper{
-					WithTax: entities.DisplayPrice{
+			Meta: core.ProductMeta{
+				DisplayPrice: core.DisplayPriceWrapper{
+					WithTax: core.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
 						Formatted: "$475.00",
 					},
-					WithoutTax: entities.DisplayPrice{
+					WithoutTax: core.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
 						Formatted: "$475.00",
 					},
 				},
-				Timestamps: entities.Timestamps{
+				Timestamps: core.Timestamps{
 					CreatedAt: "2017-06-19T14:58:42+00:00",
 				},
-				Stock: entities.ProductStock{
+				Stock: core.ProductStock{
 					Level:        500,
 					Availability: "in-stock",
 				},
-				Variations:      []entities.ProductVariation(nil),
+				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
 			Relationships: map[string]interface{}{
@@ -284,19 +284,19 @@ func TestGetProductWithFlows(t *testing.T) {
 					},
 				},
 			},
-			Included: entities.ProductIncludes{
-				Brands:      []entities.Brand(nil),
-				Categories:  []entities.Category(nil),
-				Collections: []entities.Collection(nil),
-				Files:       []entities.File(nil),
-				MainImage: entities.File{
+			Included: core.ProductIncludes{
+				Brands:      []core.Brand(nil),
+				Categories:  []core.Category(nil),
+				Collections: []core.Collection(nil),
+				Files:       []core.File(nil),
+				MainImage: core.File{
 					ID:       "",
 					Type:     "",
 					FileName: "",
 					Public:   false,
 					MimeType: "",
 					FileSize: 0,
-					Meta: entities.FileMeta{
+					Meta: core.FileMeta{
 						Dimensions: struct {
 							Width  int32 "json:\"width\""
 							Height int32 "json:\"height\""
@@ -304,7 +304,7 @@ func TestGetProductWithFlows(t *testing.T) {
 							Width:  0,
 							Height: 0,
 						},
-						Timestamps: entities.Timestamps{
+						Timestamps: core.Timestamps{
 							CreatedAt: "",
 						},
 					},
@@ -313,11 +313,11 @@ func TestGetProductWithFlows(t *testing.T) {
 					}{
 						Href: "",
 					},
-					Links: entities.Links{
+					Links: core.Links{
 						Self: "",
 					},
 				},
-				MainImages: []entities.File(nil),
+				MainImages: []core.File(nil),
 			},
 		},
 		Material:         "",
@@ -490,7 +490,7 @@ func TestPostProductWithFlows(t *testing.T) {
 	defer done()
 
 	type MyProduct struct {
-		entities.Product
+		core.Product
 		Material         string `json:"material,omitempty"`
 		MaxWatt          int    `json:"max_watt,omitempty"`
 		BulbQty          int    `json:"bulb_qty,omitempty"`
@@ -501,7 +501,7 @@ func TestPostProductWithFlows(t *testing.T) {
 		Finish           string `json:"finish,omitempty"`
 	}
 	product := MyProduct{
-		Product: entities.Product{
+		Product: core.Product{
 			Type:          "product",
 			Name:          "Crown",
 			Slug:          "crown",
@@ -510,8 +510,8 @@ func TestPostProductWithFlows(t *testing.T) {
 			ManageStock:   true,
 			Status:        "live",
 			CommodityType: "physical",
-			Price: []entities.ProductPrice{
-				entities.ProductPrice{
+			Price: []core.ProductPrice{
+				core.ProductPrice{
 					Amount:      47500,
 					Currency:    "USD",
 					IncludesTax: true,
@@ -533,7 +533,7 @@ func TestPostProductWithFlows(t *testing.T) {
 		t.Fatal("server not called")
 	}
 	expected := MyProduct{
-		Product: entities.Product{
+		Product: core.Product{
 			ID:            "9eda5ba0-4f4a-4074-8547-ccb05d1b5981",
 			Type:          "product",
 			Name:          "Crown",
@@ -543,34 +543,34 @@ func TestPostProductWithFlows(t *testing.T) {
 			ManageStock:   true,
 			Status:        "live",
 			CommodityType: "physical",
-			Price: []entities.ProductPrice{
-				entities.ProductPrice{
+			Price: []core.ProductPrice{
+				core.ProductPrice{
 					Amount:      47500,
 					Currency:    "USD",
 					IncludesTax: true,
 				},
 			},
-			Meta: entities.ProductMeta{
-				DisplayPrice: entities.DisplayPriceWrapper{
-					WithTax: entities.DisplayPrice{
+			Meta: core.ProductMeta{
+				DisplayPrice: core.DisplayPriceWrapper{
+					WithTax: core.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
 						Formatted: "$475.00",
 					},
-					WithoutTax: entities.DisplayPrice{
+					WithoutTax: core.DisplayPrice{
 						Amount:    47500,
 						Currency:  "USD",
 						Formatted: "$475.00",
 					},
 				},
-				Timestamps: entities.Timestamps{
+				Timestamps: core.Timestamps{
 					CreatedAt: "2017-06-19T14:58:42+00:00",
 				},
-				Stock: entities.ProductStock{
+				Stock: core.ProductStock{
 					Level:        500,
 					Availability: "in-stock",
 				},
-				Variations:      []entities.ProductVariation(nil),
+				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
 			Relationships: map[string]interface{}{
@@ -597,19 +597,19 @@ func TestPostProductWithFlows(t *testing.T) {
 					},
 				},
 			},
-			Included: entities.ProductIncludes{
-				Brands:      []entities.Brand(nil),
-				Categories:  []entities.Category(nil),
-				Collections: []entities.Collection(nil),
-				Files:       []entities.File(nil),
-				MainImage: entities.File{
+			Included: core.ProductIncludes{
+				Brands:      []core.Brand(nil),
+				Categories:  []core.Category(nil),
+				Collections: []core.Collection(nil),
+				Files:       []core.File(nil),
+				MainImage: core.File{
 					ID:       "",
 					Type:     "",
 					FileName: "",
 					Public:   false,
 					MimeType: "",
 					FileSize: 0,
-					Meta: entities.FileMeta{
+					Meta: core.FileMeta{
 						Dimensions: struct {
 							Width  int32 "json:\"width\""
 							Height int32 "json:\"height\""
@@ -617,7 +617,7 @@ func TestPostProductWithFlows(t *testing.T) {
 							Width:  0,
 							Height: 0,
 						},
-						Timestamps: entities.Timestamps{
+						Timestamps: core.Timestamps{
 							CreatedAt: "",
 						},
 					},
@@ -626,11 +626,11 @@ func TestPostProductWithFlows(t *testing.T) {
 					}{
 						Href: "",
 					},
-					Links: entities.Links{
+					Links: core.Links{
 						Self: "",
 					},
 				},
-				MainImages: []entities.File(nil),
+				MainImages: []core.File(nil),
 			},
 		},
 		Material:         "",
@@ -750,7 +750,7 @@ func TestPutProduct(t *testing.T) {
 	client, done := test.Start(t)
 	defer done()
 
-	var product entities.Product
+	var product core.Product
 	_, err := client.Put(
 		"products/b47372eb-6f13-4bcb-ad06-329f4ffee69d",
 		gomo.Body(struct {
@@ -769,7 +769,7 @@ func TestPutProduct(t *testing.T) {
 		t.Fatal("server not called")
 	}
 
-	expected := entities.Product{
+	expected := core.Product{
 		ID:            "b47372eb-6f13-4bcb-ad06-329f4ffee69d",
 		Type:          "product",
 		Name:          "Foo",
@@ -779,39 +779,39 @@ func TestPutProduct(t *testing.T) {
 		ManageStock:   false,
 		Status:        "live",
 		CommodityType: "physical",
-		Price: []entities.ProductPrice{
-			entities.ProductPrice{
+		Price: []core.ProductPrice{
+			core.ProductPrice{
 				Amount:      6999,
 				Currency:    "GBP",
 				IncludesTax: true,
 			},
-			entities.ProductPrice{
+			core.ProductPrice{
 				Amount:      7499,
 				Currency:    "USD",
 				IncludesTax: true,
 			},
 		},
-		Meta: entities.ProductMeta{
-			DisplayPrice: entities.DisplayPriceWrapper{
-				WithTax: entities.DisplayPrice{
+		Meta: core.ProductMeta{
+			DisplayPrice: core.DisplayPriceWrapper{
+				WithTax: core.DisplayPrice{
 					Amount:    7499,
 					Currency:  "USD",
 					Formatted: "$74.99",
 				},
-				WithoutTax: entities.DisplayPrice{
+				WithoutTax: core.DisplayPrice{
 					Amount:    7499,
 					Currency:  "USD",
 					Formatted: "$74.99",
 				},
 			},
-			Timestamps: entities.Timestamps{
+			Timestamps: core.Timestamps{
 				CreatedAt: "2018-05-11T20:07:56+00:00",
 			},
-			Stock: entities.ProductStock{
+			Stock: core.ProductStock{
 				Level:        0,
 				Availability: "out-stock",
 			},
-			Variations:      []entities.ProductVariation(nil),
+			Variations:      []core.ProductVariation(nil),
 			VariationMatrix: interface{}(nil),
 		},
 		Relationships: map[string]interface{}{
@@ -832,19 +832,19 @@ func TestPutProduct(t *testing.T) {
 				},
 			},
 		},
-		Included: entities.ProductIncludes{
-			Brands:      []entities.Brand(nil),
-			Categories:  []entities.Category(nil),
-			Collections: []entities.Collection(nil),
-			Files:       []entities.File(nil),
-			MainImage: entities.File{
+		Included: core.ProductIncludes{
+			Brands:      []core.Brand(nil),
+			Categories:  []core.Category(nil),
+			Collections: []core.Collection(nil),
+			Files:       []core.File(nil),
+			MainImage: core.File{
 				ID:       "",
 				Type:     "",
 				FileName: "",
 				Public:   false,
 				MimeType: "",
 				FileSize: 0,
-				Meta: entities.FileMeta{
+				Meta: core.FileMeta{
 					Dimensions: struct {
 						Width  int32 "json:\"width\""
 						Height int32 "json:\"height\""
@@ -852,7 +852,7 @@ func TestPutProduct(t *testing.T) {
 						Width:  0,
 						Height: 0,
 					},
-					Timestamps: entities.Timestamps{
+					Timestamps: core.Timestamps{
 						CreatedAt: "",
 					},
 				},
@@ -861,11 +861,11 @@ func TestPutProduct(t *testing.T) {
 				}{
 					Href: "",
 				},
-				Links: entities.Links{
+				Links: core.Links{
 					Self: "",
 				},
 			},
-			MainImages: []entities.File(nil),
+			MainImages: []core.File(nil),
 		},
 	}
 	if !reflect.DeepEqual(product, expected) {

@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/moltin/gomo"
-	"github.com/moltin/gomo/entities"
+	"github.com/moltin/gomo/core"
 )
 
 func Example() {
@@ -22,7 +22,7 @@ func Example() {
 	}
 
 	// create a product
-	product := entities.Product{
+	product := core.Product{
 		Name: "My new product",
 	}
 
