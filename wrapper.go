@@ -19,22 +19,28 @@ type wrapper struct {
 // APIResponse contains the response data to the call
 type response struct {
 	Data     interface{} `json:"data"`
-	Meta     interface{} `json:"meta"`
-	Included interface{} `json:"included"`
-	Links    interface{} `json:"links"`
-	Errors   []APIError  `json:"errors"`
+	Meta     interface{} `json:"meta,omitempty"`
+	Included interface{} `json:"included,omitempty"`
+	Links    interface{} `json:"links,omitempty"`
+	Errors   []APIError  `json:"errors,omitempty"`
+}
+
+// Body sets the body for a Post() or Put() request.
+func Body(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Body = target
+
+		// set the resource type if the entity has the SetType method
+		if resource, ok := w.Body.(interface{ SetType() }); ok {
+			resource.SetType()
+		}
+	}
 }
 
 // Data sets the target for a responses data resource
 func Data(target interface{}) func(*wrapper) {
 	return func(w *wrapper) {
-		w.Body = target
 		w.Response.Data = target
-
-		// set the resource type if the entity has the SetType method
-		if resource, ok := target.(interface{ SetType() }); ok {
-			resource.SetType()
-		}
 	}
 }
 

@@ -99,6 +99,10 @@ func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
 
 	wrapper.StatusCode = resp.StatusCode
 
+	if resp.StatusCode == http.StatusNoContent {
+		return nil
+	}
+
 	defer resp.Body.Close()
 
 	b, err := ioutil.ReadAll(resp.Body)
