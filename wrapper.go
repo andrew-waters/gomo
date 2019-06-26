@@ -25,16 +25,22 @@ type response struct {
 	Errors   []APIError  `json:"errors,omitempty"`
 }
 
+// Body sets the body for a Post() or Put() request.
+func Body(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Body = target
+
+		// set the resource type if the entity has the SetType method
+		if resource, ok := w.Body.(interface{ SetType() }); ok {
+			resource.SetType()
+		}
+	}
+}
+
 // Data sets the target for a responses data resource
 func Data(target interface{}) func(*wrapper) {
 	return func(w *wrapper) {
-		w.Body = target
 		w.Response.Data = target
-
-		// set the resource type if the entity has the SetType method
-		if resource, ok := target.(interface{ SetType() }); ok {
-			resource.SetType()
-		}
 	}
 }
 

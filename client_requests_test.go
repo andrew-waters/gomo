@@ -26,12 +26,10 @@ func testJSON(t *testing.T, name string, got, expected []byte) {
 	var err error
 	err = json.Unmarshal(got, &g)
 	if err != nil {
-		t.Error(">" + string(got) + "<")
 		t.Fatal(err)
 	}
 	err = json.Unmarshal(expected, &e)
 	if err != nil {
-		t.Error(">" + string(expected) + "<")
 		t.Fatal(err)
 	}
 	if reflect.DeepEqual(g, e) {
@@ -436,6 +434,7 @@ func TestPostProductWithFlows(t *testing.T) {
 	}
 	_, err := client.Post(
 		"products",
+		gomo.Body(&product),
 		gomo.Data(&product),
 	)
 	if err != nil {
@@ -523,7 +522,7 @@ func TestPutProduct(t *testing.T) {
 {
     "data": {
         "type": "product",
-	"name":"foo"
+	"name": "Foo"
     }
 }
 		`,
@@ -599,11 +598,16 @@ func TestPutProduct(t *testing.T) {
 	client, done := test.Start(t)
 	defer done()
 
-	product := entities.Product{
-		Name: "foo",
-	}
+	var product entities.Product
 	_, err := client.Put(
 		"products/b47372eb-6f13-4bcb-ad06-329f4ffee69d",
+		gomo.Body(struct {
+			Type string `json:"type"`
+			Name string `json:"name"`
+		}{
+			Type: "product",
+			Name: "Foo",
+		}),
 		gomo.Data(&product),
 	)
 	if err != nil {

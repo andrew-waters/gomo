@@ -2,6 +2,14 @@ package gomo
 
 import "testing"
 
+func TestBody(t *testing.T) {
+	var w wrapper
+	Body("foobar")(&w)
+	if s, ok := w.Body.(string); !ok || s != "foobar" {
+		t.Fatal("failed to set data")
+	}
+}
+
 func TestData(t *testing.T) {
 	var w wrapper
 	Data("foobar")(&w)
