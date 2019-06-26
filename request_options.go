@@ -49,3 +49,15 @@ func Paginate(offset, limit int) RequestResource {
 		w.Query.Add("page[offset]", strconv.Itoa(offset))
 	}
 }
+
+// Filter adds a filter to a query, prepending to any existing
+// filters
+func Filter(filter string) RequestResource {
+	return func(w *wrapper) {
+		existingFilter := w.Query.Get("filter")
+		if existingFilter != "" {
+			filter += ":" + existingFilter
+		}
+		w.Query.Set("filter", filter)
+	}
+}

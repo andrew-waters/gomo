@@ -56,3 +56,39 @@ func TestPaginate(t *testing.T) {
 		t.Error("failed to set limit")
 	}
 }
+
+func TestFilter(t *testing.T) {
+	for _, test := range []struct {
+		name           string
+		filters        []RequestResource
+		expectedFilter string
+	}{
+		{
+			"single",
+			[]RequestResource{
+				Filter("eq(status,live)"),
+			},
+			"eq(status,live)",
+		},
+		{
+			"multiple",
+			[]RequestResource{
+				Filter("eq(status,live)"),
+				Filter("like(name,Deck*)"),
+			},
+			"like(name,Deck*):eq(status,live)",
+		},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			var w wrapper
+			w.Query = make(url.Values)
+			for _, filter := range test.filters {
+				filter(&w)
+			}
+			filter := w.Query.Get("filter")
+			if filter != test.expectedFilter {
+				t.Errorf("expected: %s, got %s", test.expectedFilter, filter)
+			}
+		})
+	}
+}
