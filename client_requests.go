@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 // RequestResource are functions that provide a request with the
@@ -54,7 +55,7 @@ func (c *Client) do(wrapper *wrapper) error {
 
 }
 
-func (c Client) buildRequest(method string, endpoint string, body []byte) (*http.Request, error) {
+func (c Client) buildRequest(method string, endpoint string, query url.Values, body []byte) (*http.Request, error) {
 	var err error
 
 	req, err := http.NewRequest(method, c.url(endpoint), bytes.NewBuffer(body))
@@ -65,6 +66,8 @@ func (c Client) buildRequest(method string, endpoint string, body []byte) (*http
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer: %s", c.AccessToken))
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", defaultUserAgent)
+
+	req.URL.RawQuery = query.Encode()
 
 	return req, nil
 }
@@ -84,7 +87,7 @@ func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 		body = rbj
 	}
 
-	req, err := c.buildRequest(wrapper.Method, wrapper.Endpoint, body)
+	req, err := c.buildRequest(wrapper.Method, wrapper.Endpoint, wrapper.Query, body)
 	wrapper.Request = req
 	if err != nil {
 		return nil, err
