@@ -10,7 +10,7 @@ type Collection struct {
 	Status      string `json:"status"`
 	Meta        struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
-	}
+	} `json:"meta,omitempty"`
 	Relationships struct {
 		Products []Relationship `json:"products,omitempty"`
 	} `json:"relationships,omitempty"`

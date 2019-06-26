@@ -2,11 +2,11 @@ package entities
 
 // Variation is a Moltin variation: https://docs.moltin.com/api/catalog/product-variations
 type Variation struct {
-	ID            string                 `json:"id"`
+	ID            string                 `json:"id,omitempty"`
 	Name          string                 `json:"name"`
-	Type          string                 `json:type`
-	Relationships VariationRelationships `json:"relationships"`
-	Included      interface{}            `json:"included"`
+	Type          string                 `json:"type"`
+	Relationships VariationRelationships `json:"relationships,omitempty"`
+	Included      interface{}            `json:"included,omitempty"`
 }
 
 // VariationRelationships hold the relationships between a variations and its options

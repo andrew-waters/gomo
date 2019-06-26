@@ -11,6 +11,9 @@ type Promotion struct {
 	Schema        PromotionSchema `json:"schema"`
 	Start         string          `json:"start"`
 	End           string          `json:"end"`
+	Meta          struct {
+		Timestamps Timestamps `json:"timestamps,omitempty"`
+	} `json:"meta,omitempty"`
 }
 
 type PromotionSchema struct {

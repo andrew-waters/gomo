@@ -12,7 +12,7 @@ type Integration struct {
 	Configuration   interface{} `json:"configuration"`
 	Meta            struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
-	}
+	} `json:"meta,omitempty"`
 }
 
 // SetType sets the resource type on the struct

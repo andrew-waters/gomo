@@ -2,25 +2,28 @@ package entities
 
 // Product is a Moltin Product https://docs.moltin.com/catalog/products
 type Product struct {
-	ID            string         `json:"id,omitempty"`
-	Type          string         `json:"type"`
-	Name          string         `json:"name"`
-	Slug          string         `json:"slug"`
-	SKU           string         `json:"sku"`
-	Description   string         `json:"description"`
-	ManageStock   bool           `json:"manage_stock"`
-	Status        string         `json:"status"`
-	CommodityType string         `json:"commodity_type"`
-	Price         []ProductPrice `json:"price"`
-	Meta          struct {
-		DisplayPrice    DisplayPriceWrapper `json:"display_price"`
-		Timestamps      Timestamps          `json:"timestamps,omitempty"`
-		Stock           ProductStock        `json:"stock"`
-		Variations      []ProductVariation  `json:"variations,omitempty"`
-		VariationMatrix interface{}         `json:"variation_matrix"`
-	} `json:"meta,omitempty"`
+	ID            string          `json:"id,omitempty"`
+	Type          string          `json:"type"`
+	Name          string          `json:"name"`
+	Slug          string          `json:"slug"`
+	SKU           string          `json:"sku"`
+	Description   string          `json:"description"`
+	ManageStock   bool            `json:"manage_stock"`
+	Status        string          `json:"status"`
+	CommodityType string          `json:"commodity_type"`
+	Price         []ProductPrice  `json:"price"`
+	Meta          ProductMeta     `json:"meta,omitempty"`
 	Relationships interface{}     `json:"relationships,omitempty"`
 	Included      ProductIncludes `json:"included,omitempty"`
+}
+
+// ProductMeta represents the meta object of a Moltin product
+type ProductMeta struct {
+	DisplayPrice    DisplayPriceWrapper `json:"display_price"`
+	Timestamps      Timestamps          `json:"timestamps,omitempty"`
+	Stock           ProductStock        `json:"stock"`
+	Variations      []ProductVariation  `json:"variations,omitempty"`
+	VariationMatrix interface{}         `json:"variation_matrix"`
 }
 
 // ProductVariation is a variation object for a Products Variations meta

@@ -10,7 +10,7 @@ type Event struct {
 	Description     string   `json:"description"`
 	Name            string   `json:"name"`
 	Configuration   struct {
-		Url       string `json:"url"`
+		URL       string `json:"url"`
 		SecretKey string `json:"secret_key,omitempty"`
 	} `json:"configuration"`
 }

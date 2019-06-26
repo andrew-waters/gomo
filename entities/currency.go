@@ -15,7 +15,7 @@ type Currency struct {
 	Links             Links   `json:"links"`
 	Meta              struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
-	}
+	} `json:"meta,omitempty"`
 }
 
 // SetType sets the resource type on the struct

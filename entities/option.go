@@ -2,7 +2,7 @@ package entities
 
 // Option represents an option for selection for a single product-variation:
 type Option struct {
-	ID          string     `json:"id"`
+	ID          string     `json:"id,omitempty"`
 	Type        string     `json:"type"`
 	Name        string     `json:"name"`
 	Description string     `json:"description"`

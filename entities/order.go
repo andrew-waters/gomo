@@ -2,7 +2,7 @@ package entities
 
 // Order represents a Moltin order: https://docs.moltin.com/api/orders-and-customers/orders
 type Order struct {
-	ID              string               `json:"id"`
+	ID              string               `json:"id,omitempty"`
 	Type            string               `json:"type"`
 	Status          string               `json:"status"`
 	Payment         string               `json:"payment"`
@@ -11,8 +11,8 @@ type Order struct {
 	ShippingAddress OrderShippingAddress `json:"shipping_address"`
 	BillingAddress  OrderBillingAddress  `json:"billing_address"`
 	Links           Links                `json:"links"`
-	Meta            OrderMeta            `json:"meta"`
-	Relationships   interface{}          `json:"relationships"`
+	Meta            OrderMeta            `json:"meta,omitempty"`
+	Relationships   interface{}          `json:"relationships,omitempty"`
 }
 
 // OrderMeta represents the meta object for a Moltin order

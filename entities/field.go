@@ -17,7 +17,7 @@ type Field struct {
 	OmitNull        bool          `json:"omit_null,omitempty"`
 	Meta            struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
-	}
+	} `json:"meta,omitempty"`
 	Relationships FieldToFlowRelationship `json:"relationships,omitempty"`
 }
 
