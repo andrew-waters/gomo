@@ -19,38 +19,60 @@ type wrapper struct {
 // APIResponse contains the response data to the call
 type response struct {
 	Data     interface{} `json:"data"`
-	Meta     interface{} `json:"meta"`
-	Included interface{} `json:"included"`
-	Errors   []APIError  `json:"errors"`
+	Meta     interface{} `json:"meta,omitempty"`
+	Included interface{} `json:"included,omitempty"`
+	Links    interface{} `json:"links,omitempty"`
+	Errors   []APIError  `json:"errors,omitempty"`
 }
 
-// newAPIWrapper creates a new wrapper for this call
-func newWrapper(method string, endpoint string, resources ...interface{}) wrapper {
+// Body sets the body for a Post() or Put() request.
+func Body(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Body = target
 
-	var targetResource interface{}
-	var targetIncludes interface{}
-
-	for k, resource := range resources {
-		switch k {
-		case 0:
-			targetResource = resource
-		case 1:
-			targetIncludes = resource
+		// set the resource type if the entity has the SetType method
+		if resource, ok := w.Body.(interface{ SetType() }); ok {
+			resource.SetType()
 		}
 	}
+}
 
-	// set the resource type if the entity has the SetType method
-	if targetResource, ok := targetResource.(interface{ SetType() }); ok {
-		targetResource.SetType()
+// Data sets the target for a responses data resource
+func Data(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Data = target
 	}
+}
 
-	return wrapper{
+// Included sets the target for a responses included resource
+func Included(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Included = target
+	}
+}
+
+// Meta sets the target for a responses meta resource
+func Meta(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Meta = target
+	}
+}
+
+// Links sets the target for a responses links resource
+func Links(target interface{}) func(*wrapper) {
+	return func(w *wrapper) {
+		w.Response.Links = target
+	}
+}
+
+// newWrapper creates a new wrapper for this call
+func newWrapper(method string, endpoint string, resources ...func(*wrapper)) wrapper {
+	wrapper := wrapper{
 		Method:   strings.ToUpper(method),
 		Endpoint: endpoint,
-		Body:     targetResource,
-		Response: response{
-			Data:     targetResource,
-			Included: targetIncludes,
-		},
 	}
+	for _, resource := range resources {
+		resource(&wrapper)
+	}
+	return wrapper
 }
