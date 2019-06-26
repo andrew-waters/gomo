@@ -2,8 +2,8 @@ package entities
 
 // Address represents a Moltin customer address: https://docs.moltin.com/api/orders-and-customers/addresses
 type Address struct {
-	ID           string `json:"id"`
-	Type         string `json:"type"`
+	ID           string `json:"id,omitempty"`
+	Type         string `json:"type,omitempty"`
 	FirstName    string `json:"first_name"`
 	LastName     string `json:"last_name"`
 	Name         string `json:"name"`
