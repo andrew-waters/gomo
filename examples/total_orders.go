@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/moltin/gomo"
-	"github.com/moltin/gomo/entities"
+	"github.com/moltin/gomo/core"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 		return
 	}
 
-	var meta entities.Meta
+	var meta core.Meta
 	_, err = client.Get("/orders", gomo.Meta(&meta))
 	if err != nil {
 		fmt.Println(err)
