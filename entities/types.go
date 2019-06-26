@@ -4,6 +4,7 @@ const (
 	addressType          = "address"
 	brandType            = "brand"
 	cartType             = "cart"
+	cartItemType         = "cart_item"
 	categoryType         = "category"
 	collectionType       = "collection"
 	currencyType         = "currency"
