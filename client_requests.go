@@ -8,26 +8,32 @@ import (
 	"net/http"
 )
 
+// RequestResource are functions that provide a request with the
+// resources it requires. This includes Body() which is the body of
+// the request, Data() which sets the target struct for the returned
+// data, etc
+type RequestResource func(*wrapper)
+
 // Post makes a POST request to the API
-func (c *Client) Post(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+func (c *Client) Post(endpoint string, resource ...RequestResource) (wrapper, error) {
 	wrapper := newWrapper("post", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Get makes a GET request to the API
-func (c *Client) Get(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+func (c *Client) Get(endpoint string, resource ...RequestResource) (wrapper, error) {
 	wrapper := newWrapper("get", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Delete makes a DELETE request to the API
-func (c *Client) Delete(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+func (c *Client) Delete(endpoint string, resource ...RequestResource) (wrapper, error) {
 	wrapper := newWrapper("delete", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }
 
 // Put makes a PUT request to the API
-func (c *Client) Put(endpoint string, resource ...func(*wrapper)) (wrapper, error) {
+func (c *Client) Put(endpoint string, resource ...RequestResource) (wrapper, error) {
 	wrapper := newWrapper("put", endpoint, resource...)
 	return wrapper, c.do(&wrapper)
 }

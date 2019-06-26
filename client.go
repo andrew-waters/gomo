@@ -30,9 +30,12 @@ type Client struct {
 	Logger      func(*Client, interface{})
 }
 
+// ClientOption are functions that configure a Client
+type ClientOption func(*Client)
+
 // NewClient creates a new client for you to make requests with. It is
 // configured by passing in list of option functions.
-func NewClient(options ...func(*Client)) Client {
+func NewClient(options ...ClientOption) Client {
 	client := Client{
 		credentials: defaultCredentials(),
 		APIVersion:  defaultAPIVersion,
