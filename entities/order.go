@@ -2,17 +2,17 @@ package entities
 
 // Order represents a Moltin order: https://docs.moltin.com/api/orders-and-customers/orders
 type Order struct {
-	ID              string        `json:"id,omitempty"`
-	Type            string        `json:"type"`
-	Status          string        `json:"status"`
-	Payment         string        `json:"payment"`
-	Shipping        string        `json:"shipping"`
-	Customer        OrderCustomer `json:"customer"`
-	ShippingAddress Address       `json:"shipping_address"`
-	BillingAddress  Address       `json:"billing_address"`
-	Links           Links         `json:"links"`
-	Meta            OrderMeta     `json:"meta,omitempty"`
-	Relationships   interface{}   `json:"relationships"`
+	ID              string               `json:"id,omitempty"`
+	Type            string               `json:"type"`
+	Status          string               `json:"status"`
+	Payment         string               `json:"payment"`
+	Shipping        string               `json:"shipping"`
+	Customer        OrderCustomer        `json:"customer"`
+	ShippingAddress OrderShippingAddress `json:"shipping_address"`
+	BillingAddress  OrderBillingAddress  `json:"billing_address"`
+	Links           Links                `json:"links"`
+	Meta            OrderMeta            `json:"meta,omitempty"`
+	Relationships   interface{}          `json:"relationships"`
 }
 
 // OrderMeta represents the meta object for a Moltin order
@@ -26,6 +26,34 @@ type OrderCustomer struct {
 	ID    string `json:"id,omitempty"`
 	Name  string `json:"name,omitempty"`
 	Email string `json:"email,omitempty"`
+}
+
+// OrderBillingAddress represents a Moltin billing address for a Moltin order
+type OrderBillingAddress struct {
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	CompanyName string `json:"company_name"`
+	Line1       string `json:"line_1"`
+	Line2       string `json:"line_2"`
+	City        string `json:"city"`
+	PostCode    string `json:"postcode"`
+	County      string `json:"county"`
+	Country     string `json:"country"`
+}
+
+// OrderShippingAddress represents a Moltin shipping address for a Moltin order
+type OrderShippingAddress struct {
+	FirstName    string `json:"first_name"`
+	LastName     string `json:"last_name"`
+	PhoneNumber  string `json:"phone_number"`
+	CompanyName  string `json:"company_name"`
+	Line1        string `json:"line_1"`
+	Line2        string `json:"line_2"`
+	City         string `json:"city"`
+	PostCode     string `json:"postcode"`
+	County       string `json:"county"`
+	Country      string `json:"country"`
+	Instructions string `json:"instructions"`
 }
 
 // SetType sets the resource type on the struct
