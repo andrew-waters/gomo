@@ -7,12 +7,12 @@ type CartItem struct {
 	Name        string            `json:"name"`
 	Description string            `json:"description"`
 	Sku         string            `json:"sku"`
-	Image       CartItemImage     `json:"image,omitempty"`
+	Image       *CartItemImage    `json:"image,omitempty"`
 	Quantity    int32             `json:"quantity"`
 	UnitPrice   CartItemUnitPrice `json:"unit_price"`
 	Value       CartItemValue     `json:"value"`
-	Links       Links             `json:"links,omitempty"`
-	Meta        CartItemMeta      `json:"meta,omitempty"`
+	Links       *Links            `json:"links,omitempty"`
+	Meta        *CartItemMeta     `json:"meta,omitempty"`
 }
 
 // CartItemImage represents the image object for a Moltin cart item

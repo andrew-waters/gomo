@@ -15,10 +15,10 @@ type Field struct {
 	Unique          bool          `json:"unique"`
 	Default         interface{}   `json:"default,omitempty"`
 	OmitNull        bool          `json:"omit_null,omitempty"`
-	Meta            struct {
+	Meta            *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships FieldToFlowRelationship `json:"relationships,omitempty"`
+	Relationships *FieldToFlowRelationship `json:"relationships,omitempty"`
 }
 
 // FieldToFlowRelationship is the container for flow relationship data

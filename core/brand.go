@@ -8,10 +8,10 @@ type Brand struct {
 	Slug        string `json:"slug"`
 	Description string `json:"description"`
 	Status      string `json:"status"`
-	Meta        struct {
+	Meta        *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships struct {
+	Relationships *struct {
 		Products []Relationship `json:"products,omitempty"`
 	} `json:"relationships,omitempty"`
 }

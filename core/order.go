@@ -10,9 +10,9 @@ type Order struct {
 	Customer        OrderCustomer        `json:"customer"`
 	ShippingAddress OrderShippingAddress `json:"shipping_address"`
 	BillingAddress  OrderBillingAddress  `json:"billing_address"`
-	Links           Links                `json:"links"`
-	Meta            OrderMeta            `json:"meta,omitempty"`
-	Relationships   interface{}          `json:"relationships,omitempty"`
+	Links           *Links               `json:"links"`
+	Meta            *OrderMeta           `json:"meta,omitempty"`
+	Relationships   *interface{}         `json:"relationships,omitempty"`
 }
 
 // OrderMeta represents the meta object for a Moltin order

@@ -10,7 +10,7 @@ type Integration struct {
 	IntegrationType string      `json:"integration_type"`
 	Observes        []string    `json:"observes"`
 	Configuration   interface{} `json:"configuration"`
-	Meta            struct {
+	Meta            *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
 }

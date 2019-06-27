@@ -8,10 +8,10 @@ type Flow struct {
 	Slug        string `json:"slug"`
 	Description string `json:"description"`
 	Enabled     bool   `json:"enabled"`
-	Meta        struct {
+	Meta        *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships struct {
+	Relationships *struct {
 		Fields []Field `json:"fields,omitempty"`
 	} `json:"relationships,omitempty"`
 }
