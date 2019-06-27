@@ -2,19 +2,19 @@ package core
 
 // Product is a Moltin Product https://docs.moltin.com/catalog/products
 type Product struct {
-	ID            string          `json:"id,omitempty"`
-	Type          string          `json:"type"`
-	Name          string          `json:"name"`
-	Slug          string          `json:"slug"`
-	SKU           string          `json:"sku"`
-	Description   string          `json:"description"`
-	ManageStock   bool            `json:"manage_stock"`
-	Status        string          `json:"status"`
-	CommodityType string          `json:"commodity_type"`
-	Price         []ProductPrice  `json:"price"`
-	Meta          ProductMeta     `json:"meta,omitempty"`
-	Relationships interface{}     `json:"relationships,omitempty"`
-	Included      ProductIncludes `json:"included,omitempty"`
+	ID            string           `json:"id,omitempty"`
+	Type          string           `json:"type"`
+	Name          string           `json:"name"`
+	Slug          string           `json:"slug"`
+	SKU           string           `json:"sku"`
+	Description   string           `json:"description"`
+	ManageStock   bool             `json:"manage_stock"`
+	Status        string           `json:"status"`
+	CommodityType string           `json:"commodity_type"`
+	Price         []ProductPrice   `json:"price"`
+	Meta          *ProductMeta     `json:"meta,omitempty"`
+	Relationships *interface{}     `json:"relationships,omitempty"`
+	Included      *ProductIncludes `json:"included,omitempty"`
 }
 
 // ProductMeta represents the meta object of a Moltin product
