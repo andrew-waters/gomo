@@ -9,6 +9,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/moltin/gomo"
 	"github.com/moltin/gomo/core"
 )
@@ -19,6 +21,10 @@ type testServer struct {
 	responseCode int
 	response     string
 	called       bool
+}
+
+func makePointer(i interface{}) *interface{} {
+	return &i
 }
 
 func testJSON(t *testing.T, name string, got, expected []byte) {
@@ -237,7 +243,7 @@ func TestGetProductWithFlows(t *testing.T) {
 					IncludesTax: true,
 				},
 			},
-			Meta: core.ProductMeta{
+			Meta: &core.ProductMeta{
 				DisplayPrice: core.DisplayPriceWrapper{
 					WithTax: core.DisplayPrice{
 						Amount:    47500,
@@ -260,7 +266,7 @@ func TestGetProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
-			Relationships: map[string]interface{}{
+			Relationships: makePointer(map[string]interface{}{
 				"categories": map[string]interface{}{
 					"data": []interface{}{
 						map[string]interface{}{
@@ -283,42 +289,7 @@ func TestGetProductWithFlows(t *testing.T) {
 						"type": "main_image",
 					},
 				},
-			},
-			Included: core.ProductIncludes{
-				Brands:      []core.Brand(nil),
-				Categories:  []core.Category(nil),
-				Collections: []core.Collection(nil),
-				Files:       []core.File(nil),
-				MainImage: core.File{
-					ID:       "",
-					Type:     "",
-					FileName: "",
-					Public:   false,
-					MimeType: "",
-					FileSize: 0,
-					Meta: core.FileMeta{
-						Dimensions: struct {
-							Width  int32 "json:\"width\""
-							Height int32 "json:\"height\""
-						}{
-							Width:  0,
-							Height: 0,
-						},
-						Timestamps: core.Timestamps{
-							CreatedAt: "",
-						},
-					},
-					Link: struct {
-						Href string "json:\"href\""
-					}{
-						Href: "",
-					},
-					Links: core.Links{
-						Self: "",
-					},
-				},
-				MainImages: []core.File(nil),
-			},
+			}),
 		},
 		Material:         "",
 		MaxWatt:          0,
@@ -330,7 +301,9 @@ func TestGetProductWithFlows(t *testing.T) {
 		Finish:           "test",
 	}
 	if !reflect.DeepEqual(product, expected) {
-		t.Errorf("\nunexpected response, expected:\n%#v\ngot:\n%#v\n", expected, product)
+		productS := spew.Sprintf("%#v", product)
+		expectedS := spew.Sprintf("%#v", expected)
+		t.Errorf("\nunexpected response, expected:\n%s\ngot:\n%s\n", expectedS, productS)
 	}
 }
 
@@ -355,53 +328,6 @@ func TestPostProductWithFlows(t *testing.T) {
 		"includes_tax": true
 	    }
 	],
-	"meta": {
-	    "display_price": {
-		"with_tax": {
-		    "amount": 0,
-		    "currency": "",
-		    "formatted": ""
-		},
-		"without_tax": {
-		    "amount": 0,
-		    "currency": "",
-		    "formatted": ""
-		}
-	    },
-	    "timestamps": {},
-	    "stock": {
-		"level": 0,
-		"availability": ""
-	    },
-	    "variation_matrix": null
-	},
-	"included": {
-	    "brands": null,
-	    "categories": null,
-	    "collections": null,
-	    "files": null,
-	    "main_image": {
-		"type": "",
-		"file_name": "",
-		"public": false,
-		"mime_type": "",
-		"file_size": 0,
-		"meta": {
-		    "dimensions": {
-			"width": 0,
-			"height": 0
-		    },
-		    "timestamps": {}
-		},
-		"link": {
-		    "href": ""
-		},
-		"links": {
-		    "self": ""
-		}
-	    },
-	    "main_images": null
-	},
 	"background_colour": "#d9d9d9",
 	"finish": "test"
     }
@@ -550,7 +476,7 @@ func TestPostProductWithFlows(t *testing.T) {
 					IncludesTax: true,
 				},
 			},
-			Meta: core.ProductMeta{
+			Meta: &core.ProductMeta{
 				DisplayPrice: core.DisplayPriceWrapper{
 					WithTax: core.DisplayPrice{
 						Amount:    47500,
@@ -573,7 +499,7 @@ func TestPostProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
-			Relationships: map[string]interface{}{
+			Relationships: makePointer(map[string]interface{}{
 				"categories": map[string]interface{}{
 					"data": []interface{}{
 						map[string]interface{}{
@@ -596,42 +522,7 @@ func TestPostProductWithFlows(t *testing.T) {
 						"type": "main_image",
 					},
 				},
-			},
-			Included: core.ProductIncludes{
-				Brands:      []core.Brand(nil),
-				Categories:  []core.Category(nil),
-				Collections: []core.Collection(nil),
-				Files:       []core.File(nil),
-				MainImage: core.File{
-					ID:       "",
-					Type:     "",
-					FileName: "",
-					Public:   false,
-					MimeType: "",
-					FileSize: 0,
-					Meta: core.FileMeta{
-						Dimensions: struct {
-							Width  int32 "json:\"width\""
-							Height int32 "json:\"height\""
-						}{
-							Width:  0,
-							Height: 0,
-						},
-						Timestamps: core.Timestamps{
-							CreatedAt: "",
-						},
-					},
-					Link: struct {
-						Href string "json:\"href\""
-					}{
-						Href: "",
-					},
-					Links: core.Links{
-						Self: "",
-					},
-				},
-				MainImages: []core.File(nil),
-			},
+			}),
 		},
 		Material:         "",
 		MaxWatt:          0,
@@ -643,7 +534,9 @@ func TestPostProductWithFlows(t *testing.T) {
 		Finish:           "test",
 	}
 	if !reflect.DeepEqual(product, expected) {
-		t.Errorf("\nunexpected response, expected:\n%#v\ngot:\n%#v\n", expected, product)
+		productS := spew.Sprintf("%#v", product)
+		expectedS := spew.Sprintf("%#v", expected)
+		t.Errorf("\nunexpected response, expected:\n%s\ngot:\n%s\n", expectedS, productS)
 	}
 }
 
@@ -791,7 +684,7 @@ func TestPutProduct(t *testing.T) {
 				IncludesTax: true,
 			},
 		},
-		Meta: core.ProductMeta{
+		Meta: &core.ProductMeta{
 			DisplayPrice: core.DisplayPriceWrapper{
 				WithTax: core.DisplayPrice{
 					Amount:    7499,
@@ -814,7 +707,7 @@ func TestPutProduct(t *testing.T) {
 			Variations:      []core.ProductVariation(nil),
 			VariationMatrix: interface{}(nil),
 		},
-		Relationships: map[string]interface{}{
+		Relationships: makePointer(map[string]interface{}{
 			"categories": map[string]interface{}{
 				"data": []interface{}{
 					map[string]interface{}{
@@ -831,44 +724,11 @@ func TestPutProduct(t *testing.T) {
 					},
 				},
 			},
-		},
-		Included: core.ProductIncludes{
-			Brands:      []core.Brand(nil),
-			Categories:  []core.Category(nil),
-			Collections: []core.Collection(nil),
-			Files:       []core.File(nil),
-			MainImage: core.File{
-				ID:       "",
-				Type:     "",
-				FileName: "",
-				Public:   false,
-				MimeType: "",
-				FileSize: 0,
-				Meta: core.FileMeta{
-					Dimensions: struct {
-						Width  int32 "json:\"width\""
-						Height int32 "json:\"height\""
-					}{
-						Width:  0,
-						Height: 0,
-					},
-					Timestamps: core.Timestamps{
-						CreatedAt: "",
-					},
-				},
-				Link: struct {
-					Href string "json:\"href\""
-				}{
-					Href: "",
-				},
-				Links: core.Links{
-					Self: "",
-				},
-			},
-			MainImages: []core.File(nil),
-		},
+		}),
 	}
 	if !reflect.DeepEqual(product, expected) {
-		t.Errorf("\nunexpected response, expected:\n%#v\ngot:\n%#v\n", expected, product)
+		productS := spew.Sprintf("%#v", product)
+		expectedS := spew.Sprintf("%#v", expected)
+		t.Errorf("\nunexpected response, expected:\n%s\ngot:\n%s\n", expectedS, productS)
 	}
 }
