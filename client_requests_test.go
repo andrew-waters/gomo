@@ -266,30 +266,30 @@ func TestGetProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
-			Relationships: makePointer(map[string]interface{}{
-				"categories": map[string]interface{}{
-					"data": []interface{}{
-						map[string]interface{}{
-							"id":   "a636c261-0259-4975-ac8e-77246ec9cfe0",
-							"type": "category",
+			Relationships: &core.ProductRelationships{
+				Categories: core.MultipleRelationship{
+					Data: []core.Relationship{
+						core.Relationship{
+							Type: "category",
+							ID:   "a636c261-0259-4975-ac8e-77246ec9cfe0",
 						},
 					},
 				},
-				"files": map[string]interface{}{
-					"data": []interface{}{
-						map[string]interface{}{
-							"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-							"type": "file",
+				Files: core.MultipleRelationship{
+					Data: []core.Relationship{
+						core.Relationship{
+							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							Type: "file",
 						},
 					},
 				},
-				"main_image": map[string]interface{}{
-					"data": map[string]interface{}{
-						"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-						"type": "main_image",
+				MainImage: core.SingleRelationship{
+					Data: core.Relationship{
+						ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+						Type: "main_image",
 					},
 				},
-			}),
+			},
 		},
 		Material:         "",
 		MaxWatt:          0,
@@ -499,30 +499,30 @@ func TestPostProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: []interface{}{},
 			},
-			Relationships: makePointer(map[string]interface{}{
-				"categories": map[string]interface{}{
-					"data": []interface{}{
-						map[string]interface{}{
-							"id":   "a636c261-0259-4975-ac8e-77246ec9cfe0",
-							"type": "category",
+			Relationships: &core.ProductRelationships{
+				Categories: core.MultipleRelationship{
+					Data: []core.Relationship{
+						core.Relationship{
+							ID:   "a636c261-0259-4975-ac8e-77246ec9cfe0",
+							Type: "category",
 						},
 					},
 				},
-				"files": map[string]interface{}{
-					"data": []interface{}{
-						map[string]interface{}{
-							"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-							"type": "file",
+				Files: core.MultipleRelationship{
+					Data: []core.Relationship{
+						core.Relationship{
+							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							Type: "file",
 						},
 					},
 				},
-				"main_image": map[string]interface{}{
-					"data": map[string]interface{}{
-						"id":   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-						"type": "main_image",
+				MainImage: core.SingleRelationship{
+					Data: core.Relationship{
+						ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+						Type: "main_image",
 					},
 				},
-			}),
+			},
 		},
 		Material:         "",
 		MaxWatt:          0,
@@ -617,24 +617,6 @@ func TestPutProduct(t *testing.T) {
                 "level": 0,
                 "availability": "out-stock"
             }
-        },
-        "relationships": {
-            "categories": {
-                "data": [
-                    {
-                        "type": "category",
-                        "id": "3acf1815-ef09-44df-a6d3-e3e702663524"
-                    }
-                ]
-            },
-            "collections": {
-                "data": [
-                    {
-                        "type": "collection",
-                        "id": "10229491-7dbb-424d-be08-80c5735795cc"
-                    }
-                ]
-            }
         }
     }
 }
@@ -707,24 +689,6 @@ func TestPutProduct(t *testing.T) {
 			Variations:      []core.ProductVariation(nil),
 			VariationMatrix: interface{}(nil),
 		},
-		Relationships: makePointer(map[string]interface{}{
-			"categories": map[string]interface{}{
-				"data": []interface{}{
-					map[string]interface{}{
-						"id":   "3acf1815-ef09-44df-a6d3-e3e702663524",
-						"type": "category",
-					},
-				},
-			},
-			"collections": map[string]interface{}{
-				"data": []interface{}{
-					map[string]interface{}{
-						"id":   "10229491-7dbb-424d-be08-80c5735795cc",
-						"type": "collection",
-					},
-				},
-			},
-		}),
 	}
 	if !reflect.DeepEqual(product, expected) {
 		productS := spew.Sprintf("%#v", product)

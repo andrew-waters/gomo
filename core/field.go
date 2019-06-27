@@ -18,12 +18,12 @@ type Field struct {
 	Meta            *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships *FieldToFlowRelationship `json:"relationships,omitempty"`
+	Relationships *FieldRelationships `json:"relationships,omitempty"`
 }
 
-// FieldToFlowRelationship is the container for flow relationship data
-type FieldToFlowRelationship struct {
-	Flow RelationshipData `json:"flow,omitempty"`
+// FieldRelationships is the container for flow relationship data
+type FieldRelationships struct {
+	Flow SingleRelationship `json:"flow,omitempty"`
 }
 
 // SetType sets the resource type on the struct
