@@ -27,7 +27,11 @@ func Example() {
 	}
 
 	// send the create request
-	wrapper, err := client.Post("products", gomo.Body(product), gomo.Data(&product))
+	wrapper, err := client.Post(
+		"products",
+		gomo.Body(product),
+		gomo.Data(&product),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +43,10 @@ func Example() {
 	product.Name = "Updated Product"
 
 	// send the update request
-	wrapper, err = client.Put(fmt.Sprintf("products/%s", product.ID), gomo.Body(product))
+	wrapper, err = client.Put(
+		fmt.Sprintf("products/%s", product.ID),
+		gomo.Body(product),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,6 +79,142 @@ func ExampleNewClient() {
 			"client_id",
 			"client_secret",
 		),
+		gomo.Endpoint("http://test.example.com/"),
+		gomo.Debug(),
 	)
 	log.Println(client.APIVersion)
+}
+
+func ExampleIterate() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	gomo.Iterate(
+		100,
+		func(paginate gomo.RequestResource, _ *core.Meta) error {
+			page := []core.Product{}
+			_, err := client.Get("product", gomo.Data(&page))
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("%d products in page\n", len(page))
+			return nil
+		},
+	)
+}
+
+func ExampleMorePages() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	var orders []core.Order
+	var meta core.Meta
+	_, err := client.Get("orders", gomo.Data(&orders), gomo.Meta(&meta))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Got %d orders.\n", len(orders))
+	if gomo.MorePages(meta) {
+		fmt.Println("There are more orders to fetch!")
+	}
+}
+
+func ExampleNextPage() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	// Note that Iterate() is a neater way of doing this.
+	var allOrders []core.Order
+	offset := 0
+	limit := 100
+	for {
+		var page []core.Order
+		var meta core.Meta
+		_, err := client.Get(
+			"orders",
+			gomo.Data(&page),
+			gomo.Meta(&meta),
+			gomo.Paginate(offset, limit),
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+		allOrders = append(allOrders, page...)
+		if !gomo.MorePages(meta) {
+			break
+		}
+		offset, limit = gomo.NextPage(meta)
+	}
+	fmt.Printf("Got all the orders, a total of %d\n", len(allOrders))
+}
+
+func ExampleClient_Get() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	id := "96a52ef6-62c0-47ad-809d-6390d7727d49"
+	type MyProduct struct {
+		core.Product
+		FlowField string `json:"flow_field"`
+	}
+	var product MyProduct
+	_, err := client.Get(
+		fmt.Sprintf("products/%s", id),
+		gomo.Data(&product),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf(
+		"Product %s has flow field %s\n",
+		product.Product.ID,
+		product.FlowField,
+	)
+}
+
+func ExampleClient_Post() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	type MyProduct struct {
+		core.Product
+		FlowField string `json:"flow_field"`
+	}
+	product := MyProduct{
+		Product: core.Product{
+			Name: "foo",
+		},
+		FlowField: "foo custom",
+	}
+	_, err := client.Post(
+		"products",
+		gomo.Body(&product),
+		gomo.Data(&product),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Created product %s\n", product.Product.ID)
+}
+
+func ExampleFilter() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	var draftProducts []core.Product
+	_, err := client.Get(
+		"products",
+		gomo.Filter("eq(status,draft)"),
+		gomo.Data(&draftProducts),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Draft products:")
+	for _, product := range draftProducts {
+		fmt.Println(product.ID)
+	}
 }
