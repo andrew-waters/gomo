@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/moltin/gomo"
 	"github.com/moltin/gomo/core"
@@ -10,17 +9,14 @@ import (
 
 func main() {
 
-	clientID := os.Getenv("MOLTIN_CLIENT_ID")
-	clientSecret := os.Getenv("MOLTIN_CLIENT_SECRET")
-
-	// Instantiate a new client and provide an options function to override the default authentication method
-	// Options can be found at https://github.com/moltin/gomo/blob/master/options.go
-	client := gomo.NewClient(gomo.ClientCredentials(clientID, clientSecret))
+	// Instantiate a new client
+	client := gomo.NewClient()
 
 	// Execute the debug option function for the client in order to turn on debugging
+	// Options can be found at https://github.com/moltin/gomo/blob/master/options.go
 	client.EnableDebug()
 
-	// Authenticate against the Moltin API
+	// Authenticate against the Moltin API using the default authentication (client credentials using Getenv)
 	err := client.Authenticate()
 	if err != nil {
 		fmt.Println(err)
