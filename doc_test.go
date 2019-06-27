@@ -9,7 +9,7 @@ import (
 )
 
 func Example() {
-	// create a new client with clinet credentials
+	// create a new client with client credentials
 	client := gomo.NewClient(
 		gomo.ClientCredentials(
 			"client_id",
@@ -32,7 +32,7 @@ func Example() {
 		log.Fatal(err)
 	}
 
-	// print the execution time metic
+	// print the execution time metric
 	log.Println("Execution time:", wrapper.ExecutionTime.Elapsed())
 
 	// update a product field

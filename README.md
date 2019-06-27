@@ -14,9 +14,8 @@ go get github.com/moltin/gomo
 
 ## Documentation
 
-Code documentation is available on [GoDoc](https://godoc.org/github.com/moltin/gomo).
-
-A guide is avilable on [the wiki](https://github.com/moltin/gomo/wiki), but the demo below shows you how to create a client and get some products:
+Reference documentation is available on
+[GoDoc](https://godoc.org/github.com/moltin/gomo).
 
 ```golang
 client := gomo.NewClient(
@@ -42,7 +41,8 @@ log.Printf("Found %d products\n", len(products))
 
 ## Testing
 
-In order to fully test the package, you will need a Moltin account to add your credentials to an environment file:
+In order to fully test the package, you will need a Moltin account to add your
+credentials to an environment file:
 
 ```bash
 cp .env.example .env
@@ -54,4 +54,5 @@ Add your credentials and run:
 source .env && go test ./...
 ```
 
-If you do not suply a client_id and client_secret, we will skip tests that leverage the live API.
+If you do not supply a `MOLTIN_CLIENT_ID` and `MOLTIN_CLIENT_SECRET`, we will
+skip tests that leverage the live API.
