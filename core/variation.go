@@ -1,6 +1,8 @@
 package core
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // Variation is a Moltin variation: https://docs.moltin.com/api/catalog/product-variations
 type Variation struct {
@@ -44,8 +46,15 @@ func (m VariationMatrix) MarshalJSON() ([]byte, error) {
 }
 
 func (m *VariationMatrix) UnmarshalJSON(b []byte) error {
+	var array []interface{}
+	err := json.Unmarshal(b, &array)
+	if err == nil {
+		// We receive [] if there is no variation matrix
+		return nil
+	}
+
 	var mx map[string]json.RawMessage
-	err := json.Unmarshal(b, &mx)
+	err = json.Unmarshal(b, &mx)
 	if err != nil {
 		return err
 	}
