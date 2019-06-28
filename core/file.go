@@ -1,5 +1,13 @@
 package core
 
+import "bytes"
+
+// FileUploadRequest represents a request to upload a file to Moltin
+type FileUploadRequest struct {
+	File   bytes.Buffer `json:"file"`
+	Public bool         `json:"public,omitempty"`
+}
+
 // File is a Moltin File - https://docs.moltin.com/advanced/files
 type File struct {
 	ID       string    `json:"id,omitempty"`
