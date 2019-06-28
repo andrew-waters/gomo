@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/moltin/gomo"
 	"github.com/moltin/gomo/core"
 )
@@ -33,15 +34,18 @@ func main() {
 		return
 	}
 
-	// Declare a variable with a type of an array of products including flow data
-	var productsWithFlowData []productFlowData
+	// Declare a variable to hold the product including flow data
+	var productWithFlowData productFlowData
 
-	_, err = client.Get("/products", gomo.Data((&productsWithFlowData)))
+	_, err = client.Get(
+		"/products/9c40f78c-e35a-41ca-8357-d6d805696371",
+		gomo.Data((&productWithFlowData)),
+	)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	// Print the body and flow field data of the first product returned in the array
-	fmt.Printf("products: %v\n", productsWithFlowData[0])
+	// Print the body and flow field data of the product returned
+	spew.Dump(productWithFlowData)
 }

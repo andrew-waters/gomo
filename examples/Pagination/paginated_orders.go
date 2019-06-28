@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/moltin/gomo"
@@ -8,6 +9,9 @@ import (
 )
 
 func main() {
+	limitPtr := flag.Int("limit", 100, "maximum page size")
+	flag.Parse()
+
 	client := gomo.NewClient()
 	err := client.Authenticate()
 	if err != nil {
@@ -15,26 +19,28 @@ func main() {
 		return
 	}
 
-	// Fetch orders, two per page
-	gomo.Iterate(2, func(paginate gomo.RequestResource, meta *core.Meta) error {
-		var orders []core.Order
-		_, err = client.Get(
-			"/orders",
-			paginate,
-			gomo.Data(&orders),
-		)
-		if err != nil {
-			fmt.Println(err)
-			return err
-		}
-		fmt.Printf(
-			"Page %d/%d, Offset %d, Limit %d, Results %d\n",
-			meta.Page.Current,
-			meta.Page.Total,
-			meta.Page.Offset,
-			meta.Page.Limit,
-			len(orders),
-		)
-		return nil
-	})
+	gomo.Iterate(
+		*limitPtr,
+		func(paginate gomo.RequestResource, meta *core.Meta) error {
+			var orders []core.Order
+			_, err = client.Get(
+				"/orders",
+				paginate,
+				gomo.Data(&orders),
+			)
+			if err != nil {
+				fmt.Println(err)
+				return err
+			}
+			fmt.Printf(
+				"Page %d/%d, Offset %d, Limit %d, Results %d\n",
+				meta.Page.Current,
+				meta.Page.Total,
+				meta.Page.Offset,
+				meta.Page.Limit,
+				len(orders),
+			)
+			return nil
+		},
+	)
 }

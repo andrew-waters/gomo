@@ -1,13 +1,18 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/moltin/gomo"
 	"github.com/moltin/gomo/core"
 )
 
 func main() {
+	slugPtr := flag.String("slug", "crown2", "product slug")
+	skuPtr := flag.String("sku", "CWLP100BLK2", "product sku")
+	flag.Parse()
 
 	// Instantiate a new client
 	client := gomo.NewClient()
@@ -38,8 +43,8 @@ func main() {
 		Product: core.Product{
 			Type:          "product",
 			Name:          "Crown",
-			Slug:          "crown2",
-			SKU:           "CWLP100BLK2",
+			Slug:          *slugPtr,
+			SKU:           *skuPtr,
 			Description:   "Abstract, sculptural, refined and edgy with a modern twist. Its symmetrical, spoked structure generates a clever geometric presence, which works well in a contemporary environment.",
 			ManageStock:   true,
 			Status:        "live",
@@ -61,6 +66,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(product)
+		spew.Dump(product)
 	}
 }
