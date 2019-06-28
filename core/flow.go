@@ -11,9 +11,7 @@ type Flow struct {
 	Meta        *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships *struct {
-		Fields []Field `json:"fields,omitempty"`
-	} `json:"relationships,omitempty"`
+	Relationships *Relationships `json:"relationships,omitempty"`
 }
 
 // SetType sets the resource type on the struct

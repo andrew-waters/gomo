@@ -13,7 +13,7 @@ type Product struct {
 	CommodityType string           `json:"commodity_type"`
 	Price         []ProductPrice   `json:"price"`
 	Meta          *ProductMeta     `json:"meta,omitempty"`
-	Relationships *interface{}     `json:"relationships,omitempty"`
+	Relationships *Relationships   `json:"relationships,omitempty"`
 	Included      *ProductIncludes `json:"included,omitempty"`
 }
 
@@ -23,7 +23,7 @@ type ProductMeta struct {
 	Timestamps      Timestamps          `json:"timestamps,omitempty"`
 	Stock           ProductStock        `json:"stock"`
 	Variations      []ProductVariation  `json:"variations,omitempty"`
-	VariationMatrix interface{}         `json:"variation_matrix"`
+	VariationMatrix *VariationMatrix    `json:"variation_matrix"`
 }
 
 // ProductVariation is a variation object for a Products Variations meta

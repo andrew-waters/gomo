@@ -11,9 +11,7 @@ type Collection struct {
 	Meta        *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships *struct {
-		Products []Relationship `json:"products,omitempty"`
-	} `json:"relationships,omitempty"`
+	Relationships *Relationships `json:"relationships,omitempty"`
 }
 
 // CollectionIncludes is possible includes for a Collection
