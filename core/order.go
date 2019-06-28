@@ -12,7 +12,7 @@ type Order struct {
 	BillingAddress  OrderBillingAddress  `json:"billing_address"`
 	Links           *Links               `json:"links"`
 	Meta            *OrderMeta           `json:"meta,omitempty"`
-	Relationships   *OrderRelationships  `json:"relationships,omitempty"`
+	Relationships   *Relationships       `json:"relationships,omitempty"`
 }
 
 // OrderMeta represents the meta object for a Moltin order
@@ -53,12 +53,6 @@ type OrderShippingAddress struct {
 	County       string `json:"county"`
 	Country      string `json:"country"`
 	Instructions string `json:"instructions"`
-}
-
-// OrderRelationships is the relationships object for an order
-type OrderRelationships struct {
-	Customer SingleRelationship   `json:"customer"`
-	Items    MultipleRelationship `json:"items"`
 }
 
 // SetType sets the resource type on the struct

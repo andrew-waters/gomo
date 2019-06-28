@@ -4,16 +4,11 @@ import "encoding/json"
 
 // Variation is a Moltin variation: https://docs.moltin.com/api/catalog/product-variations
 type Variation struct {
-	ID            string                  `json:"id,omitempty"`
-	Name          string                  `json:"name"`
-	Type          string                  `json:"type"`
-	Relationships *VariationRelationships `json:"relationships,omitempty"`
-	Included      *VariationIncluded      `json:"included,omitempty"`
-}
-
-// VariationRelationships hold the relationships between a variations and its options
-type VariationRelationships struct {
-	Options MultipleRelationship `json:"options"`
+	ID            string             `json:"id,omitempty"`
+	Name          string             `json:"name"`
+	Type          string             `json:"type"`
+	Relationships *Relationships     `json:"relationships,omitempty"`
+	Included      *VariationIncluded `json:"included,omitempty"`
 }
 
 type VariationIncluded struct {
@@ -22,10 +17,10 @@ type VariationIncluded struct {
 }
 
 type VariationIncludedOption struct {
-	ID            string                  `json:"id"`
-	Name          string                  `json:"name"`
-	Description   string                  `json:"description"`
-	Relationships *VariationRelationships `json:"relationships,omitempty"`
+	ID            string         `json:"id"`
+	Name          string         `json:"name"`
+	Description   string         `json:"description"`
+	Relationships *Relationships `json:"relationships,omitempty"`
 }
 
 type VariationMatrix struct {

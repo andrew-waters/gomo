@@ -265,28 +265,31 @@ func TestGetProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: nil,
 			},
-			Relationships: &core.ProductRelationships{
-				Categories: core.MultipleRelationship{
-					Data: []core.Relationship{
+			Relationships: &core.Relationships{
+				"categories": core.RelationshipContainer{
+					Relationships: []core.Relationship{
 						core.Relationship{
 							Type: "category",
 							ID:   "a636c261-0259-4975-ac8e-77246ec9cfe0",
 						},
 					},
 				},
-				Files: core.MultipleRelationship{
-					Data: []core.Relationship{
+				"files": core.RelationshipContainer{
+					Relationships: []core.Relationship{
 						core.Relationship{
 							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
 							Type: "file",
 						},
 					},
 				},
-				MainImage: core.SingleRelationship{
-					Data: core.Relationship{
-						ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-						Type: "main_image",
+				"main_image": core.RelationshipContainer{
+					Relationships: []core.Relationship{
+						core.Relationship{
+							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							Type: "main_image",
+						},
 					},
+					OneToOne: true,
 				},
 			},
 		},
@@ -497,28 +500,31 @@ func TestPostProductWithFlows(t *testing.T) {
 				Variations:      []core.ProductVariation(nil),
 				VariationMatrix: nil,
 			},
-			Relationships: &core.ProductRelationships{
-				Categories: core.MultipleRelationship{
-					Data: []core.Relationship{
+			Relationships: &core.Relationships{
+				"categories": core.RelationshipContainer{
+					Relationships: []core.Relationship{
 						core.Relationship{
-							ID:   "a636c261-0259-4975-ac8e-77246ec9cfe0",
 							Type: "category",
+							ID:   "a636c261-0259-4975-ac8e-77246ec9cfe0",
 						},
 					},
 				},
-				Files: core.MultipleRelationship{
-					Data: []core.Relationship{
+				"files": core.RelationshipContainer{
+					Relationships: []core.Relationship{
 						core.Relationship{
 							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
 							Type: "file",
 						},
 					},
 				},
-				MainImage: core.SingleRelationship{
-					Data: core.Relationship{
-						ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
-						Type: "main_image",
+				"main_image": core.RelationshipContainer{
+					Relationships: []core.Relationship{
+						core.Relationship{
+							ID:   "7cc08cbb-256e-4271-9b01-d03a9fac9f0a",
+							Type: "main_image",
+						},
 					},
+					OneToOne: true,
 				},
 			},
 		},

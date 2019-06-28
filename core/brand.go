@@ -11,9 +11,7 @@ type Brand struct {
 	Meta        *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships *struct {
-		Products []Relationship `json:"products,omitempty"`
-	} `json:"relationships,omitempty"`
+	Relationships *Relationships `json:"relationships,omitempty"`
 }
 
 // BrandIncludes is possible includes for a Brand

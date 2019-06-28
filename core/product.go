@@ -2,19 +2,19 @@ package core
 
 // Product is a Moltin Product https://docs.moltin.com/catalog/products
 type Product struct {
-	ID            string                `json:"id,omitempty"`
-	Type          string                `json:"type"`
-	Name          string                `json:"name"`
-	Slug          string                `json:"slug"`
-	SKU           string                `json:"sku"`
-	Description   string                `json:"description"`
-	ManageStock   bool                  `json:"manage_stock"`
-	Status        string                `json:"status"`
-	CommodityType string                `json:"commodity_type"`
-	Price         []ProductPrice        `json:"price"`
-	Meta          *ProductMeta          `json:"meta,omitempty"`
-	Relationships *ProductRelationships `json:"relationships,omitempty"`
-	Included      *ProductIncludes      `json:"included,omitempty"`
+	ID            string           `json:"id,omitempty"`
+	Type          string           `json:"type"`
+	Name          string           `json:"name"`
+	Slug          string           `json:"slug"`
+	SKU           string           `json:"sku"`
+	Description   string           `json:"description"`
+	ManageStock   bool             `json:"manage_stock"`
+	Status        string           `json:"status"`
+	CommodityType string           `json:"commodity_type"`
+	Price         []ProductPrice   `json:"price"`
+	Meta          *ProductMeta     `json:"meta,omitempty"`
+	Relationships *Relationships   `json:"relationships,omitempty"`
+	Included      *ProductIncludes `json:"included,omitempty"`
 }
 
 // ProductMeta represents the meta object of a Moltin product
@@ -60,13 +60,6 @@ type ProductIncludes struct {
 	Files       []File       `json:"files"`
 	MainImage   File         `json:"main_image"`
 	MainImages  []File       `json:"main_images"`
-}
-
-// ProductRelationships is the relationships object for a product
-type ProductRelationships struct {
-	Files      MultipleRelationship `json:"files"`
-	Categories MultipleRelationship `json:"categories"`
-	MainImage  SingleRelationship   `json:"main_image"`
 }
 
 // SetType sets the resource type on the struct

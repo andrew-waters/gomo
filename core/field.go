@@ -18,16 +18,11 @@ type Field struct {
 	Meta            *struct {
 		Timestamps Timestamps `json:"timestamps,omitempty"`
 	} `json:"meta,omitempty"`
-	Relationships *FieldRelationships `json:"relationships,omitempty"`
+	Relationships *Relationships `json:"relationships,omitempty"`
 }
 
 // FIXME: This could be treated in the same way as Modifier marshalling
 type FieldValidationRule interface{}
-
-// FieldRelationships is the container for flow relationship data
-type FieldRelationships struct {
-	Flow SingleRelationship `json:"flow,omitempty"`
-}
 
 // SetType sets the resource type on the struct
 func (f *Field) SetType() {
