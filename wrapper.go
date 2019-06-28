@@ -27,6 +27,12 @@ type response struct {
 	Errors   []APIError  `json:"errors,omitempty"`
 }
 
+func (w *wrapper) apply(resources ...RequestResource) {
+	for _, resource := range resources {
+		resource(w)
+	}
+}
+
 // newWrapper creates a new wrapper for this call
 func newWrapper(method string, endpoint string, resources ...RequestResource) wrapper {
 	wrapper := wrapper{
@@ -34,8 +40,6 @@ func newWrapper(method string, endpoint string, resources ...RequestResource) wr
 		Endpoint: endpoint,
 		Query:    make(url.Values),
 	}
-	for _, resource := range resources {
-		resource(&wrapper)
-	}
+	wrapper.apply(resources...)
 	return wrapper
 }

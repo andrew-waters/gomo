@@ -31,8 +31,10 @@ func Iterate(limit int, f func(RequestResource, *core.Meta) error) error {
 	offset := 0
 	for MorePages(meta) {
 		err := f(func(w *wrapper) {
-			Paginate(offset, limit)(w)
-			Meta(&meta)(w)
+			w.apply(
+				Paginate(offset, limit),
+				Meta(&meta),
+			)
 		}, &meta)
 		if err != nil {
 			return err
