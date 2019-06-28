@@ -161,8 +161,7 @@ func TestGetProductWithFlows(t *testing.T) {
             "stock": {
                 "level": 500,
                 "availability": "in-stock"
-            },
-            "variation_matrix": []
+            }
         },
         "relationships": {
             "files": {
@@ -264,7 +263,7 @@ func TestGetProductWithFlows(t *testing.T) {
 					Availability: "in-stock",
 				},
 				Variations:      []core.ProductVariation(nil),
-				VariationMatrix: []interface{}{},
+				VariationMatrix: nil,
 			},
 			Relationships: &core.ProductRelationships{
 				Categories: core.MultipleRelationship{
@@ -373,8 +372,7 @@ func TestPostProductWithFlows(t *testing.T) {
             "stock": {
                 "level": 500,
                 "availability": "in-stock"
-            },
-            "variation_matrix": []
+            }
         },
         "relationships": {
             "files": {
@@ -497,7 +495,7 @@ func TestPostProductWithFlows(t *testing.T) {
 					Availability: "in-stock",
 				},
 				Variations:      []core.ProductVariation(nil),
-				VariationMatrix: []interface{}{},
+				VariationMatrix: nil,
 			},
 			Relationships: &core.ProductRelationships{
 				Categories: core.MultipleRelationship{
@@ -687,7 +685,7 @@ func TestPutProduct(t *testing.T) {
 				Availability: "out-stock",
 			},
 			Variations:      []core.ProductVariation(nil),
-			VariationMatrix: interface{}(nil),
+			VariationMatrix: nil,
 		},
 	}
 	if !reflect.DeepEqual(product, expected) {
