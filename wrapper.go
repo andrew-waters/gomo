@@ -1,6 +1,7 @@
 package gomo
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"strings"
@@ -15,16 +16,21 @@ type wrapper struct {
 	Body          interface{}
 	Query         url.Values
 	Request       *http.Request
-	Response      response
+	Response      map[string]json.RawMessage
+	Resources     []resourceTarget
+	Errors        []APIError
 }
 
-// APIResponse contains the response data to the call
-type response struct {
-	Data     interface{} `json:"data"`
-	Meta     interface{} `json:"meta,omitempty"`
-	Included interface{} `json:"included,omitempty"`
-	Links    interface{} `json:"links,omitempty"`
-	Errors   []APIError  `json:"errors,omitempty"`
+type resourceTarget struct {
+	Section string
+	Target  interface{}
+}
+
+func (w *wrapper) addResource(section string, target interface{}) {
+	w.Resources = append(
+		w.Resources,
+		resourceTarget{section, target},
+	)
 }
 
 func (w *wrapper) apply(resources ...RequestResource) {

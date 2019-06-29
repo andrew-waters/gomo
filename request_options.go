@@ -17,28 +17,28 @@ func Body(target interface{}) RequestResource {
 // Data sets the target for a responses data resource
 func Data(target interface{}) RequestResource {
 	return func(w *wrapper) {
-		w.Response.Data = target
+		w.addResource("data", target)
 	}
 }
 
 // Included sets the target for a responses included resource
 func Included(target interface{}) RequestResource {
 	return func(w *wrapper) {
-		w.Response.Included = target
+		w.addResource("included", target)
 	}
 }
 
 // Meta sets the target for a responses meta resource
 func Meta(target interface{}) RequestResource {
 	return func(w *wrapper) {
-		w.Response.Meta = target
+		w.addResource("meta", target)
 	}
 }
 
 // Links sets the target for a responses links resource
 func Links(target interface{}) RequestResource {
 	return func(w *wrapper) {
-		w.Response.Links = target
+		w.addResource("links", target)
 	}
 }
 

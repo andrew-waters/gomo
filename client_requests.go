@@ -76,9 +76,9 @@ func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 	var body []byte
 
 	if wrapper.Body != nil {
-		rb := response{
-			Data: wrapper.Body,
-		}
+		rb := struct {
+			Data interface{} `json:"data"`
+		}{wrapper.Body}
 		rbj, err := json.Marshal(rb)
 		if err != nil {
 			return nil, err
@@ -121,11 +121,28 @@ func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
 
 	err = json.Unmarshal(b, &wrapper.Response)
 	if err != nil {
-		return fmt.Errorf("failed to unmarshal response %v", err)
+		return fmt.Errorf("failed to unmarshal response: %v", err)
+	}
+	if errsJSON, ok := wrapper.Response["errors"]; ok {
+		err = json.Unmarshal(errsJSON, &wrapper.Errors)
+		if err != nil {
+			return fmt.Errorf("failed to unmarshal response errors: %v", err)
+		}
 	}
 
-	if len(wrapper.Response.Errors) > 0 {
-		e := wrapper.Response.Errors[0]
+	for _, r := range wrapper.Resources {
+		sectionJSON, ok := wrapper.Response[r.Section]
+		if !ok {
+			continue
+		}
+		err := json.Unmarshal(sectionJSON, r.Target)
+		if err != nil {
+			return fmt.Errorf("failed to unmarshal response %s: %v", r.Section, err)
+		}
+	}
+
+	if len(wrapper.Errors) > 0 {
+		e := wrapper.Errors[0]
 		return fmt.Errorf("%s: %s", e.Title, e.Detail)
 	}
 

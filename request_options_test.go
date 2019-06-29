@@ -13,35 +13,42 @@ func TestBody(t *testing.T) {
 	}
 }
 
-func TestData(t *testing.T) {
-	var w wrapper
-	Data("foobar")(&w)
-	if s, ok := w.Response.Data.(string); !ok || s != "foobar" {
-		t.Fatal("failed to set data")
-	}
-}
-
-func TestLinks(t *testing.T) {
-	var w wrapper
-	Links("foobar")(&w)
-	if s, ok := w.Response.Links.(string); !ok || s != "foobar" {
-		t.Fatal("failed to set links")
-	}
-}
-
-func TestIncluded(t *testing.T) {
-	var w wrapper
-	Included("foobar")(&w)
-	if s, ok := w.Response.Included.(string); !ok || s != "foobar" {
-		t.Fatal("failed to set included")
-	}
-}
-
-func TestMeta(t *testing.T) {
-	var w wrapper
-	Meta("foobar")(&w)
-	if s, ok := w.Response.Meta.(string); !ok || s != "foobar" {
-		t.Fatal("failed to set meta")
+func TestResouceSetters(t *testing.T) {
+	for _, test := range []struct {
+		section         string
+		requestResource RequestResource
+	}{
+		{
+			"data",
+			Data("foobar"),
+		},
+		{
+			"links",
+			Links("foobar"),
+		},
+		{
+			"included",
+			Included("foobar"),
+		},
+		{
+			"meta",
+			Meta("foobar"),
+		},
+	} {
+		t.Run(test.section, func(t *testing.T) {
+			var w wrapper
+			test.requestResource(&w)
+			if len(w.Resources) == 0 {
+				t.Fatal("failed to add resource")
+			}
+			rt := w.Resources[0]
+			if rt.Section != test.section {
+				t.Errorf("wrong section: %s", rt.Section)
+			}
+			if s, ok := rt.Target.(string); !ok || s != "foobar" {
+				t.Fatal("failed to set target")
+			}
+		})
 	}
 }
 
