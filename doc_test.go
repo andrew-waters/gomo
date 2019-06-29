@@ -220,3 +220,44 @@ func ExampleFilter() {
 		fmt.Println(product.ID)
 	}
 }
+
+func ExampleInclude() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	id := "c82d2f00-bc66-4c7d-984a-8765222abb98"
+	var included struct {
+		Products []core.Product `json:"products"`
+	}
+	err := client.Get(
+		"categories/"+id,
+		gomo.Include("produces"),
+		gomo.Included(&included),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Category %s has products:\n", id)
+	for _, product := range included.Products {
+		fmt.Println(product.ID)
+	}
+}
+
+func ExampleSort() {
+	client := gomo.NewClient()
+	_ = client.Authenticate()
+
+	var productsByName []core.Product
+	err := client.Get(
+		"products",
+		gomo.Sort("name"),
+		gomo.Data(&productsByName),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Product names:")
+	for _, product := range productsByName {
+		fmt.Println(product.Name)
+	}
+}
