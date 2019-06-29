@@ -8,7 +8,7 @@ import (
 func TestBody(t *testing.T) {
 	var w wrapper
 	Body("foobar")(&w)
-	if s, ok := w.Body.(string); !ok || s != "foobar" {
+	if s, ok := w.body.(string); !ok || s != "foobar" {
 		t.Fatal("failed to set data")
 	}
 }
@@ -38,14 +38,14 @@ func TestResouceSetters(t *testing.T) {
 		t.Run(test.section, func(t *testing.T) {
 			var w wrapper
 			test.requestResource(&w)
-			if len(w.Resources) == 0 {
+			if len(w.resources) == 0 {
 				t.Fatal("failed to add resource")
 			}
-			rt := w.Resources[0]
-			if rt.Section != test.section {
-				t.Errorf("wrong section: %s", rt.Section)
+			rt := w.resources[0]
+			if rt.section != test.section {
+				t.Errorf("wrong section: %s", rt.section)
 			}
-			if s, ok := rt.Target.(string); !ok || s != "foobar" {
+			if s, ok := rt.target.(string); !ok || s != "foobar" {
 				t.Fatal("failed to set target")
 			}
 		})
@@ -54,12 +54,12 @@ func TestResouceSetters(t *testing.T) {
 
 func TestPaginate(t *testing.T) {
 	var w wrapper
-	w.Query = make(url.Values)
+	w.query = make(url.Values)
 	Paginate(200, 100)(&w)
-	if w.Query.Get("page[offset]") != "200" {
+	if w.query.Get("page[offset]") != "200" {
 		t.Error("failed to set offset")
 	}
-	if w.Query.Get("page[limit]") != "100" {
+	if w.query.Get("page[limit]") != "100" {
 		t.Error("failed to set limit")
 	}
 }
@@ -88,11 +88,11 @@ func TestFilter(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			var w wrapper
-			w.Query = make(url.Values)
+			w.query = make(url.Values)
 			for _, filter := range test.filters {
 				filter(&w)
 			}
-			filter := w.Query.Get("filter")
+			filter := w.query.Get("filter")
 			if filter != test.expectedFilter {
 				t.Errorf("expected: %s, got %s", test.expectedFilter, filter)
 			}
@@ -124,11 +124,11 @@ func TestInclude(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			var w wrapper
-			w.Query = make(url.Values)
+			w.query = make(url.Values)
 			for _, include := range test.includes {
 				include(&w)
 			}
-			include := w.Query.Get("include")
+			include := w.query.Get("include")
 			if include != test.expectedInclude {
 				t.Errorf("expected: %s, got %s", test.expectedInclude, include)
 			}
@@ -138,9 +138,9 @@ func TestInclude(t *testing.T) {
 
 func TestSort(t *testing.T) {
 	var w wrapper
-	w.Query = make(url.Values)
+	w.query = make(url.Values)
 	Sort("foo")(&w)
-	sort := w.Query.Get("sort")
+	sort := w.query.Get("sort")
 	if sort != "foo" {
 		t.Error("failed to sort")
 	}

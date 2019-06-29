@@ -75,10 +75,10 @@ func (c Client) buildRequest(method string, endpoint string, query url.Values, b
 func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 	var body []byte
 
-	if wrapper.Body != nil {
+	if wrapper.body != nil {
 		rb := struct {
 			Data interface{} `json:"data"`
-		}{wrapper.Body}
+		}{wrapper.body}
 		rbj, err := json.Marshal(rb)
 		if err != nil {
 			return nil, err
@@ -87,15 +87,15 @@ func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 		body = rbj
 	}
 
-	req, err := c.buildRequest(wrapper.Method, wrapper.Endpoint, wrapper.Query, body)
-	wrapper.Request = req
+	req, err := c.buildRequest(wrapper.method, wrapper.endpoint, wrapper.query, body)
+	wrapper.request = req
 	if err != nil {
 		return nil, err
 	}
 
-	wrapper.ExecutionTime.Start()
-	resp, err := c.httpClient.Do(wrapper.Request)
-	wrapper.ExecutionTime.End()
+	wrapper.executionTime.Start()
+	resp, err := c.httpClient.Do(wrapper.request)
+	wrapper.executionTime.End()
 
 	if err != nil {
 		return nil, err
@@ -106,7 +106,7 @@ func (c *Client) makeRequest(wrapper *wrapper) (*http.Response, error) {
 
 func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
 
-	wrapper.StatusCode = resp.StatusCode
+	wrapper.statusCode = resp.StatusCode
 
 	if resp.StatusCode == http.StatusNoContent {
 		return nil
@@ -119,30 +119,30 @@ func (c Client) parseResponse(resp *http.Response, wrapper *wrapper) error {
 		return fmt.Errorf("failed to read request body: %v", err)
 	}
 
-	err = json.Unmarshal(b, &wrapper.Response)
+	err = json.Unmarshal(b, &wrapper.response)
 	if err != nil {
 		return fmt.Errorf("failed to unmarshal response: %v", err)
 	}
-	if errsJSON, ok := wrapper.Response["errors"]; ok {
-		err = json.Unmarshal(errsJSON, &wrapper.Errors)
+	if errsJSON, ok := wrapper.response["errors"]; ok {
+		err = json.Unmarshal(errsJSON, &wrapper.errors)
 		if err != nil {
 			return fmt.Errorf("failed to unmarshal response errors: %v", err)
 		}
 	}
 
-	for _, r := range wrapper.Resources {
-		sectionJSON, ok := wrapper.Response[r.Section]
+	for _, r := range wrapper.resources {
+		sectionJSON, ok := wrapper.response[r.section]
 		if !ok {
 			continue
 		}
-		err := json.Unmarshal(sectionJSON, r.Target)
+		err := json.Unmarshal(sectionJSON, r.target)
 		if err != nil {
-			return fmt.Errorf("failed to unmarshal response %s: %v", r.Section, err)
+			return fmt.Errorf("failed to unmarshal response %s: %v", r.section, err)
 		}
 	}
 
-	if len(wrapper.Errors) > 0 {
-		e := wrapper.Errors[0]
+	if len(wrapper.errors) > 0 {
+		e := wrapper.errors[0]
 		return fmt.Errorf("%s: %s", e.Title, e.Detail)
 	}
 

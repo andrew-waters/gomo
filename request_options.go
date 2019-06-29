@@ -5,10 +5,10 @@ import "strconv"
 // Body sets the body for a Post() or Put() request.
 func Body(target interface{}) RequestResource {
 	return func(w *wrapper) {
-		w.Body = target
+		w.body = target
 
 		// set the resource type if the entity has the SetType method
-		if resource, ok := w.Body.(interface{ SetType() }); ok {
+		if resource, ok := w.body.(interface{ SetType() }); ok {
 			resource.SetType()
 		}
 	}
@@ -53,8 +53,8 @@ func Errors(target *[]APIError) RequestResource {
 // See https://docs.moltin.com/api/basics/pagination
 func Paginate(offset, limit int) RequestResource {
 	return func(w *wrapper) {
-		w.Query.Add("page[limit]", strconv.Itoa(limit))
-		w.Query.Add("page[offset]", strconv.Itoa(offset))
+		w.query.Add("page[limit]", strconv.Itoa(limit))
+		w.query.Add("page[offset]", strconv.Itoa(offset))
 	}
 }
 
@@ -68,7 +68,7 @@ func Filter(filter string) RequestResource {
 // See https://docs.moltin.com/api/basics/sorting
 func Sort(by string) RequestResource {
 	return func(w *wrapper) {
-		w.Query.Set("sort", by)
+		w.query.Set("sort", by)
 	}
 }
 
@@ -81,16 +81,16 @@ func Include(include string) RequestResource {
 // ExecutionTime returns a pointer to the ExecutionTime for the request
 func ExecutionTime(e **APIExecution) RequestResource {
 	return func(w *wrapper) {
-		*e = &w.ExecutionTime
+		*e = &w.executionTime
 	}
 }
 
 func queryParameter(parameter, value, separator string) RequestResource {
 	return func(w *wrapper) {
-		existing := w.Query.Get(parameter)
+		existing := w.query.Get(parameter)
 		if existing != "" {
 			value += separator + existing
 		}
-		w.Query.Set(parameter, value)
+		w.query.Set(parameter, value)
 	}
 }

@@ -9,26 +9,26 @@ import (
 
 // wrapper is a wrapper around a request and response to the API
 type wrapper struct {
-	Method        string
-	Endpoint      string
-	StatusCode    int
-	ExecutionTime APIExecution
-	Body          interface{}
-	Query         url.Values
-	Request       *http.Request
-	Response      map[string]json.RawMessage
-	Resources     []resourceTarget
-	Errors        []APIError
+	method        string
+	endpoint      string
+	statusCode    int
+	executionTime APIExecution
+	body          interface{}
+	query         url.Values
+	request       *http.Request
+	response      map[string]json.RawMessage
+	resources     []resourceTarget
+	errors        []APIError
 }
 
 type resourceTarget struct {
-	Section string
-	Target  interface{}
+	section string
+	target  interface{}
 }
 
 func (w *wrapper) addResource(section string, target interface{}) {
-	w.Resources = append(
-		w.Resources,
+	w.resources = append(
+		w.resources,
 		resourceTarget{section, target},
 	)
 }
@@ -42,9 +42,9 @@ func (w *wrapper) apply(resources ...RequestResource) {
 // newWrapper creates a new wrapper for this call
 func newWrapper(method string, endpoint string, resources ...RequestResource) wrapper {
 	wrapper := wrapper{
-		Method:   strings.ToUpper(method),
-		Endpoint: endpoint,
-		Query:    make(url.Values),
+		method:   strings.ToUpper(method),
+		endpoint: endpoint,
+		query:    make(url.Values),
 	}
 	wrapper.apply(resources...)
 	return wrapper

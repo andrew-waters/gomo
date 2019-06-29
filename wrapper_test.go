@@ -11,10 +11,10 @@ func TestNewWrapper(t *testing.T) {
 			called = true
 		},
 	)
-	if w.Method != "METHOD" {
+	if w.method != "METHOD" {
 		t.Error("failed to set method")
 	}
-	if w.Endpoint != "endpoint" {
+	if w.endpoint != "endpoint" {
 		t.Error("failed to set endpoint")
 	}
 	if called == false {
