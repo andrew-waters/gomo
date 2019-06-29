@@ -49,7 +49,8 @@ func Errors(target *[]APIError) RequestResource {
 	}
 }
 
-// Paginate sets the page to select bases on the offset and limit
+// Paginate sets the page to select bases on the offset and limit.
+// See https://docs.moltin.com/api/basics/pagination
 func Paginate(offset, limit int) RequestResource {
 	return func(w *wrapper) {
 		w.Query.Add("page[limit]", strconv.Itoa(limit))
@@ -58,20 +59,38 @@ func Paginate(offset, limit int) RequestResource {
 }
 
 // Filter adds a filter to a query, prepending to any existing
-// filters
+// filters. See https://docs.moltin.com/api/basics/filtering
 func Filter(filter string) RequestResource {
+	return queryParameter("filter", filter, ":")
+}
+
+// Sort sorts the results.
+// See https://docs.moltin.com/api/basics/sorting
+func Sort(by string) RequestResource {
 	return func(w *wrapper) {
-		existingFilter := w.Query.Get("filter")
-		if existingFilter != "" {
-			filter += ":" + existingFilter
-		}
-		w.Query.Set("filter", filter)
+		w.Query.Set("sort", by)
 	}
+}
+
+// Include adds a resource to be included in the request.
+// See https://docs.moltin.com/api/basics/includes
+func Include(include string) RequestResource {
+	return queryParameter("include", include, ",")
 }
 
 // ExecutionTime returns a pointer to the ExecutionTime for the request
 func ExecutionTime(e **APIExecution) RequestResource {
 	return func(w *wrapper) {
 		*e = &w.ExecutionTime
+	}
+}
+
+func queryParameter(parameter, value, separator string) RequestResource {
+	return func(w *wrapper) {
+		existing := w.Query.Get(parameter)
+		if existing != "" {
+			value += separator + existing
+		}
+		w.Query.Set(parameter, value)
 	}
 }

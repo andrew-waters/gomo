@@ -99,3 +99,49 @@ func TestFilter(t *testing.T) {
 		})
 	}
 }
+
+func TestInclude(t *testing.T) {
+	for _, test := range []struct {
+		name            string
+		includes        []RequestResource
+		expectedInclude string
+	}{
+		{
+			"single",
+			[]RequestResource{
+				Include("products"),
+			},
+			"products",
+		},
+		{
+			"multiple",
+			[]RequestResource{
+				Include("products"),
+				Include("categories"),
+			},
+			"categories,products",
+		},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			var w wrapper
+			w.Query = make(url.Values)
+			for _, include := range test.includes {
+				include(&w)
+			}
+			include := w.Query.Get("include")
+			if include != test.expectedInclude {
+				t.Errorf("expected: %s, got %s", test.expectedInclude, include)
+			}
+		})
+	}
+}
+
+func TestSort(t *testing.T) {
+	var w wrapper
+	w.Query = make(url.Values)
+	Sort("foo")(&w)
+	sort := w.Query.Get("sort")
+	if sort != "foo" {
+		t.Error("failed to sort")
+	}
+}
