@@ -21,12 +21,14 @@ func main() {
 
 	gomo.Iterate(
 		*limitPtr,
-		func(paginate gomo.RequestResource, meta *core.Meta) error {
+		func(paginate gomo.RequestResource) error {
 			var orders []core.Order
-			_, err = client.Get(
+			var meta core.Meta
+			err = client.Get(
 				"/orders",
 				paginate,
 				gomo.Data(&orders),
+				gomo.Meta(&meta),
 			)
 			if err != nil {
 				fmt.Println(err)

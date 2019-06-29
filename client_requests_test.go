@@ -104,7 +104,7 @@ func TestGetProductWithError(t *testing.T) {
 	client, done := test.Start(t)
 	defer done()
 
-	_, err := client.Get(
+	err := client.Get(
 		"products/9eda5ba0-4f4a-4074-8547-ccb05d1b5981",
 	)
 	if err == nil {
@@ -214,7 +214,7 @@ func TestGetProductWithFlows(t *testing.T) {
 		Finish           string `json:"finish"`
 	}
 	var product MyProduct
-	_, err := client.Get(
+	err := client.Get(
 		"products/9eda5ba0-4f4a-4074-8547-ccb05d1b5981",
 		gomo.Data(&product),
 	)
@@ -448,7 +448,7 @@ func TestPostProductWithFlows(t *testing.T) {
 		BackgroundColour: "#d9d9d9",
 		Finish:           "test",
 	}
-	_, err := client.Post(
+	err := client.Post(
 		"products",
 		gomo.Body(&product),
 		gomo.Data(&product),
@@ -553,7 +553,7 @@ func TestDeleteProduct(t *testing.T) {
 	client, done := test.Start(t)
 	defer done()
 
-	_, err := client.Delete(
+	err := client.Delete(
 		"products/9eda5ba0-4f4a-4074-8547-ccb05d1b5981",
 	)
 	if err != nil {
@@ -630,7 +630,7 @@ func TestPutProduct(t *testing.T) {
 	defer done()
 
 	var product core.Product
-	_, err := client.Put(
+	err := client.Put(
 		"products/b47372eb-6f13-4bcb-ad06-329f4ffee69d",
 		gomo.Body(struct {
 			Type string `json:"type"`

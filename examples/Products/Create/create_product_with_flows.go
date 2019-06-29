@@ -61,7 +61,7 @@ func main() {
 		Finish:           "test",
 	}
 
-	_, err = client.Post("/products", gomo.Body(&product), gomo.Data(&product))
+	err = client.Post("/products", gomo.Body(&product), gomo.Data(&product))
 
 	if err != nil {
 		fmt.Println(err)
