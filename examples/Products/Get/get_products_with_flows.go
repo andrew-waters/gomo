@@ -37,7 +37,7 @@ func main() {
 	// Declare a variable to hold the product including flow data
 	var productWithFlowData productFlowData
 
-	_, err = client.Get(
+	err = client.Get(
 		"/products/9c40f78c-e35a-41ca-8357-d6d805696371",
 		gomo.Data((&productWithFlowData)),
 	)

@@ -23,7 +23,7 @@ func main() {
 		*limitPtr,
 		func(paginate gomo.RequestResource, meta *core.Meta) error {
 			var orders []core.Order
-			_, err = client.Get(
+			err = client.Get(
 				"/orders",
 				paginate,
 				gomo.Data(&orders),

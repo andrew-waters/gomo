@@ -62,7 +62,7 @@ func main() {
 
 	var fileResponse core.File
 
-	_, err = client.Post("/files", gomo.Body(fileRequest), gomo.Data(&fileResponse))
+	err = client.Post("/files", gomo.Body(fileRequest), gomo.Data(&fileResponse))
 
 	if err != nil {
 		fmt.Println(err)

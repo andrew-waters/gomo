@@ -26,24 +26,26 @@ func Example() {
 		Name: "My new product",
 	}
 
+	var executionTime *gomo.APIExecution
 	// send the create request
-	wrapper, err := client.Post(
+	err := client.Post(
 		"products",
 		gomo.Body(product),
 		gomo.Data(&product),
+		gomo.ExecutionTime(&executionTime),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// print the execution time metric
-	log.Println("Execution time:", wrapper.ExecutionTime.Elapsed())
+	log.Println("Execution time:", executionTime.Elapsed())
 
 	// update a product field
 	product.Name = "Updated Product"
 
 	// send the update request
-	wrapper, err = client.Put(
+	err = client.Put(
 		fmt.Sprintf("products/%s", product.ID),
 		gomo.Body(product),
 	)
@@ -52,7 +54,7 @@ func Example() {
 	}
 
 	// delete the product
-	_, err = client.Delete(fmt.Sprintf("products/%s", product.ID))
+	err = client.Delete(fmt.Sprintf("products/%s", product.ID))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -93,7 +95,7 @@ func ExampleIterate() {
 		100,
 		func(paginate gomo.RequestResource, _ *core.Meta) error {
 			page := []core.Product{}
-			_, err := client.Get("product", gomo.Data(&page))
+			err := client.Get("product", gomo.Data(&page))
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -109,7 +111,7 @@ func ExampleMorePages() {
 
 	var orders []core.Order
 	var meta core.Meta
-	_, err := client.Get("orders", gomo.Data(&orders), gomo.Meta(&meta))
+	err := client.Get("orders", gomo.Data(&orders), gomo.Meta(&meta))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -131,7 +133,7 @@ func ExampleNextPage() {
 	for {
 		var page []core.Order
 		var meta core.Meta
-		_, err := client.Get(
+		err := client.Get(
 			"orders",
 			gomo.Data(&page),
 			gomo.Meta(&meta),
@@ -159,7 +161,7 @@ func ExampleClient_Get() {
 		FlowField string `json:"flow_field"`
 	}
 	var product MyProduct
-	_, err := client.Get(
+	err := client.Get(
 		fmt.Sprintf("products/%s", id),
 		gomo.Data(&product),
 	)
@@ -188,7 +190,7 @@ func ExampleClient_Post() {
 		},
 		FlowField: "foo custom",
 	}
-	_, err := client.Post(
+	err := client.Post(
 		"products",
 		gomo.Body(&product),
 		gomo.Data(&product),
@@ -205,7 +207,7 @@ func ExampleFilter() {
 	_ = client.Authenticate()
 
 	var draftProducts []core.Product
-	_, err := client.Get(
+	err := client.Get(
 		"products",
 		gomo.Filter("eq(status,draft)"),
 		gomo.Data(&draftProducts),

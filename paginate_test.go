@@ -120,7 +120,7 @@ func TestIterate(t *testing.T) {
 		gomo.Endpoint(server.URL),
 	)
 	err := gomo.Iterate(10, func(paginate gomo.RequestResource, meta *core.Meta) error {
-		_, err := client.Get("", paginate)
+		err := client.Get("", paginate)
 		if err != nil {
 			return err
 		}

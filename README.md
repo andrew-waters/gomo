@@ -30,7 +30,7 @@ if err := client.Authenticate(); err != nil {
 }
 
 products := []entities.Product{}
-_, err := client.Get("products", gomo.Data(&products))
+err := client.Get("products", gomo.Data(&products))
 if err != nil {
 	log.Fatal(err)
 }

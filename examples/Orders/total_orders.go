@@ -16,7 +16,7 @@ func main() {
 	}
 
 	var meta core.Meta
-	_, err = client.Get("/orders", gomo.Meta(&meta))
+	err = client.Get("/orders", gomo.Meta(&meta))
 	if err != nil {
 		fmt.Println(err)
 		return
