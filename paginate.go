@@ -19,7 +19,7 @@ func MorePages(meta core.Meta) bool {
 // passed to a Get() request. The function is called for each page
 // of size limit. If the function returns an error at any point
 // the iteration stops and the error is returned.
-func Iterate(limit int, f func(RequestResource, *core.Meta) error) error {
+func Iterate(limit int, f func(RequestResource) error) error {
 	meta := core.Meta{
 		Page: core.MetaPage{
 			Offset:  0,
@@ -35,7 +35,7 @@ func Iterate(limit int, f func(RequestResource, *core.Meta) error) error {
 				Paginate(offset, limit),
 				Meta(&meta),
 			)
-		}, &meta)
+		})
 		if err != nil {
 			return err
 		}

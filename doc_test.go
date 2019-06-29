@@ -93,7 +93,7 @@ func ExampleIterate() {
 
 	gomo.Iterate(
 		100,
-		func(paginate gomo.RequestResource, _ *core.Meta) error {
+		func(paginate gomo.RequestResource) error {
 			page := []core.Product{}
 			err := client.Get("product", gomo.Data(&page))
 			if err != nil {
